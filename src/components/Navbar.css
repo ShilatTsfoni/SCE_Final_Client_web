@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap");
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1355cb;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 28px;
+  padding: 8px 0px 8px 8px;
+  height: 64px;
+  gap: 4px;
+  font-family: "Assistant";
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.notification-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  margin-right: 20px;
+  cursor: pointer;
+  color: black;
+  position: relative;
+  top: 1.25px;
+  left: 3px;
+  opacity: 1;
+  transition: background-color 0.3s ease;
+}
+
+.message-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  margin-right: 20px;
+  cursor: pointer;
+  color: black;
+  position: relative;
+  top: 1.25px;
+  left: 3px;
+  opacity: 1;
+  transform: rotate(0deg);
+  transition: background-color 0.3s ease;
+}
+
+.notification-icon.active,
+.message-icon.active {
+  padding: 6px;
+  border-radius: 12px;
+  background-color: var(--primary-500, #003eac);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.greeting-text {
+  margin-right: 20px;
+  white-space: nowrap;
+}
+
+.static-text {
+  margin-right: 5px;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 28px;
+  margin-right: 10px;
+}

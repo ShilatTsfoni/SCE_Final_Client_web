@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Assistant", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sidebar {
+  width: 100px;
+  height: 960px;
+  top: 80px;
+  padding: 16px 0px 16px 0px;
+  gap: 40px;
+  opacity: 0px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: fixed;
+  right: 0;
+  box-shadow: 0px 0 20px 0px #4545481a;
+}
+
+.sidebar-menu {
+  width: 100%;
+  height: 246px;
+  list-style: none;
+  padding: 5px 0;
+  margin-top: -10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.sidebar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  width: 100%;
+  height: 56px;
+  gap: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.sidebar-item:hover .icon-container {
+  width: 40px;
+  height: 32px;
+  gap: 0;
+  padding: 4px 16px;
+  border-radius: 16px;
+  opacity: 1;
+  background-color: #e6f4ff;
+}
+
+.icon-container {
+  width: 40px;
+  height: 32px;
+  padding: 4px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px 0 0 0;
+  transition: background-color 0.3s ease;
+}
+
+.icon-container.active {
+  width: 40px;
+  height: 32px;
+  gap: 0;
+  padding: 4px 16px;
+  border-radius: 16px;
+  opacity: 1;
+  background-color: #e6f4ff;
+}
+
+.sidebar-item i {
+  font-size: 24px;
+}
+
+.sidebar-item span {
+  font-size: 12px;
+  font-family: "Assistant", sans-serif;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
