@@ -43,7 +43,7 @@ const Sidebar = () => {
           <div
             className={`icon-container ${active === "הודעות" ? "active" : ""}`}
           >
-            <i className="fas fa-envelope"></i>
+            <i className="fa-regular fa-message"></i>
           </div>
           <span>הודעות</span>
         </li>

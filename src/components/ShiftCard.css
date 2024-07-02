@@ -1,0 +1,199 @@
+.shift-card {
+  width: 380px;
+  height: 260px;
+  padding: 10px;
+  border: 2px solid;
+  border-radius: 12px;
+  border-width: 1px 4px 1px 1px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden; /* Ensures the overlay doesn't spill outside the card */
+  background-color: #ffffff;
+}
+
+.shift-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(10, 16, 13, 0.5); /* The shadow color */
+  display: none; /* Hidden by default */
+  pointer-events: none; /* Allows interaction with elements underneath */
+}
+
+.shift-card.past::after {
+  display: block; /* Show the overlay when past */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: -10px;
+}
+
+.header span {
+  flex-grow: 1;
+  text-align: right;
+  margin-right: 5px;
+  font-family: Assistant;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 29.2px;
+}
+
+.clock-icon {
+  filter: brightness(0) saturate(100%) invert(28%) sepia(93%) saturate(6387%)
+    hue-rotate(207deg) brightness(89%) contrast(100%);
+  margin-left: 5px;
+}
+
+.edit-icon-container {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.12),
+    0px 4px 12px 2px rgba(0, 0, 0, 0.24);
+  position: relative;
+  cursor: pointer;
+}
+
+.edit-icon-container:hover {
+  background-color: #f9f9f9; /* Slightly off-white to show interaction */
+}
+
+.edit-icon {
+  width: 18px;
+  height: 18px;
+  fill: #0a100d;
+}
+
+.title {
+  text-align: right;
+  margin-top: 0;
+  font-family: "Assistant";
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 29.2px;
+  text-decoration: underline;
+}
+
+.participant-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Align to the right */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.circle-wrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+}
+
+.circle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--color) 0deg var(--percentage),
+    #d9d9d9 var(--percentage) 360deg
+  );
+}
+
+.circle .mask,
+.circle .fill {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle .mask {
+  clip: rect(0px, 40px, 40px, 20px);
+}
+
+.circle .mask.full,
+.circle .mask.half {
+  transform: rotate(135deg); /* Adjust start point */
+}
+
+.circle .inside-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.participant-text {
+  font-family: "Assistant";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: right;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.participants {
+  display: flex;
+  justify-content: right;
+  gap: 0px; /* Slight overlap */
+  margin-left: 80px;
+}
+
+.participant-photo {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+  border: 1.37px solid #060606;
+  margin-left: -10px;
+}
+
+.extra-participants {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: #0a100d;
+  font-weight: 600;
+  font-family: "Assistant";
+  font-size: 19px;
+  line-height: 28px;
+  align-self: right;
+  border: 1.37px solid #060606;
+  margin-left: -10px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.footer svg {
+  height: 20px;
+}
+
+.messages-icon,
+.add-task-icon {
+  cursor: pointer; /* Makes the cursor a pointer when hovered */
+}

@@ -1,15 +1,29 @@
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: "Assistant", sans-serif;
+  background-color: #f7f7fc;
+}
+
 .app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
+.navbar,
+.sidebar {
+  position: fixed; /* If not already set */
+  z-index: 1000; /* High enough to stay on top of other components */
+}
+
 .main-content {
-  display: flex;
-  flex: 1;
+  padding-top: 64px; /* Height of the navbar */
+  padding-left: 100px; /* Width of the sidebar */
 }
 
 .content {
-  flex: 1;
-  padding: 20px;
+  margin-left: 100px; /* Width of the sidebar */
+  margin-top: 80px; /* Height of the navbar */
+  padding: 20px; /* Provides space inside the content area */
 }
