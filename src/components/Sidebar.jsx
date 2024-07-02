@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as ShiftsIcon } from "../assets/shifts icon.svg";
+import { ReactComponent as VolunteersIcon } from "../assets/volunteers icon.svg";
+import { ReactComponent as MessagesIcon } from "../assets/Messages icon.svg";
+import { ReactComponent as SettingsIcon } from "../assets/settings icon.svg";
 import "./Sidebar.css";
+import {
+  height,
+  width,
+} from "@fortawesome/free-regular-svg-icons/faAddressBook";
 
 const Sidebar = () => {
   const [active, setActive] = useState("משמרות");
@@ -21,7 +29,7 @@ const Sidebar = () => {
           <div
             className={`icon-container ${active === "משמרות" ? "active" : ""}`}
           >
-            <i className="fas fa-calendar-alt"></i>
+            <ShiftsIcon />
           </div>
           <span>משמרות</span>
         </li>
@@ -32,7 +40,7 @@ const Sidebar = () => {
           <div
             className={`icon-container ${active === "מתנדבים" ? "active" : ""}`}
           >
-            <i className="fas fa-users"></i>
+            <VolunteersIcon />{" "}
           </div>
           <span>צוותים</span>
         </li>
@@ -43,7 +51,7 @@ const Sidebar = () => {
           <div
             className={`icon-container ${active === "הודעות" ? "active" : ""}`}
           >
-            <i className="fa-regular fa-message"></i>
+            <MessagesIcon />{" "}
           </div>
           <span>הודעות</span>
         </li>
@@ -54,7 +62,7 @@ const Sidebar = () => {
           <div
             className={`icon-container ${active === "הגדרות" ? "active" : ""}`}
           >
-            <i className="fas fa-cog"></i>
+            <SettingsIcon />{" "}
           </div>
           <span>הגדרות</span>
         </li>
