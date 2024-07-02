@@ -3,8 +3,8 @@ import "./Navbar.css";
 //import notificationsIcon from "../assets/notifications icon.svg";
 //import messagesIcon from "../assets/Messages icon.svg";
 import homePageLogo from "../assets/homePageLogo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faMessage } from "@fortawesome/free-regular-svg-icons"; // Import specific FontAwesome icons
+import { ReactComponent as NotificationsIcon } from "../assets/notifications icon.svg";
+import { ReactComponent as MessagesIcon } from "../assets/Messages icon.svg";
 
 const Navbar = () => {
   const [activeIcon, setActiveIcon] = useState(null); // State to track active icon
@@ -24,16 +24,14 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <FontAwesomeIcon
-          icon={faBell}
+        <NotificationsIcon
           style={{ color: "#000000" }}
           className={`notification-icon ${
             activeIcon === "bell" ? "active" : ""
           }`}
           onClick={() => handleIconClick("bell")}
         />
-        <FontAwesomeIcon
-          icon={faMessage}
+        <MessagesIcon
           style={{ color: "#000000" }}
           className={`message-icon ${activeIcon === "message" ? "active" : ""}`}
           onClick={() => handleIconClick("message")}
