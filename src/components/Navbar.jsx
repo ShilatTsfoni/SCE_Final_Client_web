@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./Navbar.css";
+//import notificationsIcon from "../assets/notifications icon.svg";
+//import messagesIcon from "../assets/Messages icon.svg";
 import homePageLogo from "../assets/homePageLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faMessage } from "@fortawesome/free-regular-svg-icons"; // Import specific FontAwesome icons

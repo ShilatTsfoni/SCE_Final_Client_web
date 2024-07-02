@@ -1,14 +1,25 @@
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import Shifts from "./Pages/Shifts";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
 function App() {
   return (
     <div className="app-container">
       <Navbar />
-      <div className="main-content">
-        <Sidebar />
-        <div className="content"></div>
+      <Sidebar />
+      <div
+        className="content"
+        style={{ marginLeft: "100px", marginTop: "64px" }}
+      >
+        {" "}
+        {/* Adjust these values based on actual dimensions */}
+        <Routes>
+          <Route path="/" element={<Shifts />} />
+          <Route path="/shifts" element={<Shifts />} />
+          {/* Additional routes can be defined here */}
+        </Routes>
       </div>
     </div>
   );

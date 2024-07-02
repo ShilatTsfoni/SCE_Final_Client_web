@@ -1,0 +1,155 @@
+.shift-navbar {
+  width: 100%;
+  height: 56px;
+  padding: 16px 0 0 0;
+  box-shadow: 0px 0px 2px 0px #0000001f, 0px 4px 12px 2px #0000001f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  position: fixed; /* Fix to the top */
+  top: 80px;
+  right: 0; /* Align to the right */
+  z-index: 500;
+}
+
+.box-percentages {
+  display: flex;
+  gap: 12px;
+  padding: 4px 0 0 0;
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.percentages-text {
+  font-family: "Assistant";
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.percentages-text .number {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 11.5px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.percentages-text .label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 11.5px;
+  text-align: right;
+}
+
+.main-navbar-content {
+  display: flex;
+  align-items: center;
+  gap: 93px;
+  width: 950px;
+  height: 64px;
+  margin-bottom: 15px;
+  justify-content: flex-end;
+}
+
+.current-date-box {
+  margin-right: 50px;
+}
+
+.nav-icon {
+  cursor: pointer;
+  width: 12.37px;
+  height: 12px;
+  margin-right: 50px;
+}
+
+.current-date {
+  font-family: "Assistant";
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 15.25px;
+  text-align: center;
+  margin-right: 50px;
+  direction: rtl;
+}
+
+.picker-box {
+  position: relative;
+}
+
+.picker-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  height: 40px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 2px 0px #0000001f, 0px 4px 12px 2px #0000001f;
+  background-color: white;
+  font-family: "Assistant";
+  font-size: 16px;
+  text-align: right;
+  cursor: pointer;
+  border: none;
+  padding: 0 8px;
+}
+
+.arrow-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 8px; /* Space between icon and text */
+}
+
+.picker-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100px; /* Adjust as needed */
+  background-color: white;
+  box-shadow: 0px 0px 2px 0px #0000001f, 0px 4px 12px 2px #0000001f;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.picker-options div {
+  padding: 8px;
+  cursor: pointer;
+  text-align: right; /* RTL text alignment */
+}
+
+.picker-options div:hover {
+  background-color: #f0f0f0;
+}
+
+.shifts-box {
+  display: flex;
+  align-content: center;
+  gap: 16px;
+  margin-right: 120px; /* Move to the right */
+  flex-direction: row;
+}
+
+.shifts-text {
+  font-family: "Assistant";
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 15.25px;
+  text-align: right;
+  margin-top: 20px;
+}
+
+.plus-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px 0px #00000033, 0px 1px 10px 0px #0000001f,
+    0px 4px 5px 0px #00000024;
+  font-size: 28px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
