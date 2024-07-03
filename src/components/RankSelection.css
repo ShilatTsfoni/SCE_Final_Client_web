@@ -1,0 +1,46 @@
+.rank-selection-window {
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px #f2f2f7;
+  padding: 10px;
+  z-index: 1000; /* Ensure it appears above other elements */
+  border-radius: 4px;
+  width: 100px;
+}
+
+.rank-selection-window select {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  font-family: "Assistant";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: right;
+}
+
+.rank-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rank-actions button {
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #ffffff;
+  color: black;
+  transition: background-color 0.3s;
+  font-family: "Assistant";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: right;
+}

@@ -1,18 +1,35 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ReactComponent as ShiftsIcon } from "../assets/shifts icon.svg";
 import { ReactComponent as VolunteersIcon } from "../assets/volunteers icon.svg";
 import { ReactComponent as MessagesIcon } from "../assets/Messages icon.svg";
 import { ReactComponent as SettingsIcon } from "../assets/settings icon.svg";
 import "./Sidebar.css";
-import {
-  height,
-  width,
-} from "@fortawesome/free-regular-svg-icons/faAddressBook";
 
 const Sidebar = () => {
   const [active, setActive] = useState("משמרות");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/shifts":
+        setActive("משמרות");
+        break;
+      case "/volunteers":
+        setActive("מתנדבים");
+        break;
+      case "/messages":
+        setActive("הודעות");
+        break;
+      case "/settings":
+        setActive("הגדרות");
+        break;
+      default:
+        setActive("");
+        break;
+    }
+  }, [location.pathname]);
 
   const handleNavigation = (item, path) => {
     setActive(item);
