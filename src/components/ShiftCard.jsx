@@ -33,8 +33,10 @@ const ShiftCard = ({ time, title, participants, totalParticipants }) => {
         <div className="edit-icon-container">
           <EditIcon className="edit-icon" />
         </div>
-        <span>{time}</span>
-        <ClockIcon className="clock-icon" />
+        <div className="time-and-clock">
+          <ClockIcon className="clock-icon" />
+          <span>{time}</span>
+        </div>
       </div>
       <div className="title">{title}</div>
       <div className="participant-status">
@@ -62,7 +64,6 @@ const ShiftCard = ({ time, title, participants, totalParticipants }) => {
       <div className="footer">
         <MessagesIcon className="messages-icon" />
         <AddTaskIcon className="add-task-icon" />
-
         <div className="participants">
           {participants.length > 4 && (
             <div className="extra-participants">{`+${
