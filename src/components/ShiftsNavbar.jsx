@@ -46,6 +46,9 @@ const ShiftsNavbar = ({ activeVolunteers, staffedShifts }) => {
 
   return (
     <div className="shift-navbar">
+      {addShiftOpen && (
+        <div className="overlay" onClick={handleAddShiftClick} />
+      )}
       <div className="box-percentages">
         <div className="percentages-text">
           <span className="number">{activeVolunteers}</span>
@@ -78,8 +81,10 @@ const ShiftsNavbar = ({ activeVolunteers, staffedShifts }) => {
       </div>
       <div className="shifts-box">
         <span className="shifts-text">משמרות</span>
-        <div className="plus-icon" onClick={handleAddShiftClick}>
-          +
+        <div className="plus-icon-wrapper">
+          <div className="plus-icon" onClick={handleAddShiftClick}>
+            +
+          </div>
         </div>
       </div>
       {addShiftOpen && <AddShift onClose={handleCloseAddShift} />}
