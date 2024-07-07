@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ReactComponent as RightArrowIcon } from "../assets/right icon.svg";
 import { ReactComponent as LeftArrowIcon } from "../assets/left icon.svg";
 import { ReactComponent as ArrowDownIcon } from "../assets/errow down icon.svg";
+import AddShift from "./AddShift";
 import ShiftCard from "./ShiftCard";
 import "./ShiftsNavbar.css";
 
@@ -9,6 +10,7 @@ const ShiftsNavbar = ({ activeVolunteers, staffedShifts }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [pickerOpen, setPickerOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("יום");
+  const [addShiftOpen, setAddShiftOpen] = useState(false);
 
   const handlePreviousDay = () => {
     setCurrentDate(new Date(currentDate.setDate(currentDate.getDate() - 1)));
@@ -32,6 +34,14 @@ const ShiftsNavbar = ({ activeVolunteers, staffedShifts }) => {
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setPickerOpen(false);
+  };
+
+  const handleAddShiftClick = () => {
+    setAddShiftOpen((prevState) => !prevState);
+  };
+
+  const handleCloseAddShift = () => {
+    setAddShiftOpen(false);
   };
 
   return (
@@ -68,8 +78,11 @@ const ShiftsNavbar = ({ activeVolunteers, staffedShifts }) => {
       </div>
       <div className="shifts-box">
         <span className="shifts-text">משמרות</span>
-        <div className="plus-icon">+</div>
+        <div className="plus-icon" onClick={handleAddShiftClick}>
+          +
+        </div>
       </div>
+      {addShiftOpen && <AddShift onClose={handleCloseAddShift} />}
     </div>
   );
 };

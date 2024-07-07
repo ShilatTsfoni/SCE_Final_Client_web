@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Shifts.css";
 import ShiftCard from "../components/ShiftCard";
 import ShiftsNavbar from "../components/ShiftsNavbar";
+import AddShift from "../components/AddShift";
 import shifts from "../data/ShiftsData";
 import { ReactComponent as MorningIcon } from "../assets/morning icon.svg";
 import { ReactComponent as NoonIcon } from "../assets/noon icon.svg";
@@ -24,11 +25,23 @@ import { ReactComponent as EveningIcon } from "../assets/evening icon.svg";
   totalParticipants: 16,
 }; */
 
-// Function to determine the time slot based on the shift time
+/* // Function to determine the time slot based on the shift time
 const getTimeSlot = (time) => {
   const [start, end] = time.split("-").map((t) => t.trim());
   const [startHour] = start.split(":").map(Number);
   const [endHour] = end.split(":").map(Number);
+  const [showAddShift, setShowAddShift] = useState(false);
+
+  if (endHour <= 12) return "morning";
+  if (endHour <= 18) return "noon";
+  return "evening";
+}; */
+
+// Utility function to determine the time slot
+const getTimeSlot = (time) => {
+  const [start, end] = time.split("-").map((t) => t.trim());
+  const startHour = parseInt(start.split(":")[0]);
+  const endHour = parseInt(end.split(":")[0]);
 
   if (endHour <= 12) return "morning";
   if (endHour <= 18) return "noon";
@@ -37,6 +50,8 @@ const getTimeSlot = (time) => {
 
 const Shifts = () => {
   const [, setTick] = useState(0); // State to force rerender
+  const [showAddShift, setShowAddShift] = useState(false);
+  const [addButtonRef, setAddButtonRef] = useState(null); // To store the ref from Navbar
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -70,10 +85,25 @@ const Shifts = () => {
     }
   };
 
+  const toggleAddShift = (ref) => {
+    setAddButtonRef(ref); // Get the ref from Navbar when "+" is clicked
+    setShowAddShift(!showAddShift);
+  };
+
   return (
     <div className="shifts-container">
       <div className="navbar-wrapper">
-        <ShiftsNavbar activeVolunteers={"92"} staffedShifts={"70%"} />
+        <ShiftsNavbar
+          activeVolunteers={"92"}
+          staffedShifts={"70%"}
+          onAddShiftClick={toggleAddShift}
+        />
+        {showAddShift && (
+          <AddShift
+            onClose={() => setShowAddShift(false)}
+            addButtonRef={addButtonRef}
+          />
+        )}
       </div>
       <div className="shifts-table-wrapper">
         <div
