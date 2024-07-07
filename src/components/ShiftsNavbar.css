@@ -152,4 +152,17 @@
   font-size: 28px;
   cursor: pointer;
   margin-bottom: 20px;
+  transform: translateZ(0); /* Force GPU acceleration */
+  color: #1355cb;
+}
+
+.add-shift {
+  position: absolute;
+  top: 65px; /* Adjust this value to position the AddShift component correctly */
+  right: 110px;
+  z-index: 1000;
+  background: white;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border-radius: 10px;
+  padding: 20px;
 }
