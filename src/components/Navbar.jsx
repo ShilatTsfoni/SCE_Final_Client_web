@@ -4,9 +4,10 @@ import { ReactComponent as NotificationsIcon } from "../assets/notifications ico
 import { ReactComponent as MessagesIcon } from "../assets/Messages icon.svg";
 import "./Navbar.css";
 
-const Navbar = ({ onNotificationsClick }) => {
+const Navbar = ({ onNotificationsClick, onMessagesClick }) => {
   const [activeIcon, setActiveIcon] = useState(null); // State to track active icon
   const notificationIconRef = useRef(null);
+  const messageIconRef = useRef(null);
 
   const getGreeting = () => {
     const hours = new Date().getHours();
@@ -30,6 +31,14 @@ const Navbar = ({ onNotificationsClick }) => {
         left: rect.left + window.scrollX - 150,
       });
     }
+
+    if (icon === "message" && messageIconRef.current) {
+      const rect = messageIconRef.current.getBoundingClientRect();
+      onMessagesClick({
+        top: rect.bottom + window.scrollY + 130,
+        left: rect.left + window.scrollX + 300,
+      });
+    }
   };
 
   return (
@@ -44,6 +53,7 @@ const Navbar = ({ onNotificationsClick }) => {
           onClick={() => handleIconClick("bell")}
         />
         <MessagesIcon
+          ref={messageIconRef}
           style={{ color: "#000000" }}
           className={`message-icon ${activeIcon === "message" ? "active" : ""}`}
           onClick={() => handleIconClick("message")}
