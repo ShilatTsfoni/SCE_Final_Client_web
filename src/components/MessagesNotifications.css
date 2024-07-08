@@ -1,0 +1,166 @@
+.messages-notifications-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 198px;
+  max-height: 400px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+  direction: rtl;
+  overflow: hidden;
+}
+
+.messages-notifications-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: -20px;
+  box-sizing: border-box;
+}
+
+.messages-notifications-modal-header h2 {
+  font-family: "Assistant";
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.messages-notifications-close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.messages-notifications-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: -10px;
+  overflow-y: auto;
+  max-height: 170px;
+  box-sizing: content-box;
+  overflow-x: hidden;
+}
+
+.message-notifications-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  position: relative;
+  border-bottom: 1px solid #dcdce5;
+  padding-bottom: 10px;
+}
+
+.message-notifications-profile-pic {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.message-notifications-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.message-notifications-sender {
+  background-color: #f2f2f7;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-family: "Assistant";
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: right;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.message-notifications-content-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.message-notifications-content {
+  background-color: #f2f2f7;
+  padding: 10px;
+  border-radius: 8px;
+  font-family: "Assistant";
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: right;
+  margin-bottom: 4px;
+  margin-right: -28px;
+  display: inline-block;
+  position: relative;
+  min-width: 280px;
+  word-wrap: break-word;
+}
+
+.message-notifications-timestamp {
+  font-family: "Assistant";
+  font-size: 8px;
+  font-weight: 200;
+  line-height: 16px;
+  text-align: left;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.messages-notifications-input-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f7;
+  padding: 10px;
+  border-radius: 12px;
+  margin-top: 10px;
+  position: relative;
+  width: auto;
+  min-width: 104%;
+  transition: width 0.3s ease;
+  margin-right: -30px;
+}
+
+.messages-notifications-input-wrapper input {
+  flex: 1;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  font-family: "Assistant";
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: right;
+  color: #0a100d;
+  background-color: transparent;
+  padding-left: 30px;
+}
+
+.messages-notifications-input-wrapper button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  left: 10px;
+}
+
+.messages-notifications-footer {
+  width: calc(100% - 40px);
+  height: 1px;
+  background-color: #dcdce5;
+  margin-top: 10px;
+}
