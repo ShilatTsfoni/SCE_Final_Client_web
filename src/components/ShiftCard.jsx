@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { ReactComponent as EditIcon } from "../assets/edit icon.svg";
 import { ReactComponent as ClockIcon } from "../assets/clock icon.svg";
 import { ReactComponent as MessagesIcon } from "../assets/Messages icon.svg";
 import { ReactComponent as AddTaskIcon } from "../assets/add_task icon.svg";
 import "./ShiftCard.css";
 
-const ShiftCard = ({ time, title, participants, totalParticipants }) => {
+const ShiftCard = ({
+  date,
+  time,
+  title,
+  participants,
+  totalParticipants,
+  type,
+  onEdit,
+}) => {
+  const cardRef = useRef(null);
+
   const getColor = (current, total) => {
     const ratio = current / total;
     if (ratio === 1) return "#078727";
@@ -18,19 +28,38 @@ const ShiftCard = ({ time, title, participants, totalParticipants }) => {
 
   // Time Handling
   const currentTime = new Date();
-  const endTime = new Date();
-  endTime.setHours(Number(time.split("-")[1].split(":")[0]));
-  endTime.setMinutes(Number(time.split("-")[1].split(":")[1]));
+  const [startHour, startMinute] = time.split("-")[0].split(":").map(Number);
+  const [endHour, endMinute] = time.split("-")[1].split(":").map(Number);
 
-  const isPast = currentTime.getTime() > endTime.getTime();
+  const endTime = new Date(currentTime);
+  endTime.setHours(endHour, endMinute, 0, 0);
+
+  // Correctly handle time comparison
+  const isPast = currentTime > endTime;
+
+  useEffect(() => {
+    console.log("Current time:", currentTime);
+    console.log("End time:", endTime);
+    console.log("Is past:", isPast);
+  }, [currentTime, endTime, isPast]);
+
+  const handleEditClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const position = {
+      top: rect.bottom + window.scrollY,
+      left: rect.left + window.scrollX,
+    };
+    onEdit(position, date, time, title, type);
+  };
 
   return (
     <div
+      ref={cardRef}
       className={`shift-card ${isPast ? "past" : ""}`}
       style={{ borderColor: color }}
     >
       <div className="header">
-        <div className="edit-icon-container">
+        <div className="edit-icon-container" onClick={handleEditClick}>
           <EditIcon className="edit-icon" />
         </div>
         <div className="time-and-clock">
