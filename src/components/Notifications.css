@@ -1,0 +1,85 @@
+.notifications-modal {
+  position: fixed;
+  width: 448px;
+  height: 654px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+  direction: rtl;
+}
+
+.notifications-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: -25px;
+}
+
+.notifications-modal-header h2 {
+  font-family: "Assistant";
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: right;
+}
+
+.notifications-close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.notifications-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 600px; /* Adjust as needed */
+  overflow-y: auto; /* Make it scrollable */
+}
+
+.notifications-modal-content h3 {
+  font-family: "Assistant";
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: right;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.notification-profile-pic {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.notification-info {
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+.notification-message {
+  font-family: "Assistant";
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: right;
+  width: 260px;
+}
+
+.notification-time {
+  font-family: "Assistant";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: right;
+  color: #69b1ff;
+}
