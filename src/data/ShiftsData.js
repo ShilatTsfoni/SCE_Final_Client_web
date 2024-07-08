@@ -27,6 +27,43 @@ const shifts = {
         { photo: profile1, name: "Participant 1" },
       ],
       totalParticipants: 16,
+      approvalRequests: [
+        {
+          id: 1,
+          name: "שחר טל",
+          role: "בקשת הצטרפות",
+          type: "משמרת מנהרה",
+          profilePic: profile1,
+        },
+        {
+          id: 2,
+          name: "מאיה אלחנזו",
+          role: "בקשת הצטרפות",
+          type: "למערך",
+          profilePic: profile2,
+        },
+        {
+          id: 3,
+          name: "גיא ארז",
+          role: "בקשת הצטרפות",
+          type: "משמרת דוכן",
+          profilePic: profile3,
+        },
+        {
+          id: 4,
+          name: "שרית מלכה",
+          role: "בקשת הצטרפות",
+          type: "למערך",
+          profilePic: profile1,
+        },
+        {
+          id: 5,
+          name: "גיא מלכה",
+          role: "בקשת הצטרפות",
+          type: "משמרת דוכן",
+          profilePic: profile1,
+        },
+      ],
     },
     {
       date: "יום שני, 8 ביולי",
@@ -91,6 +128,22 @@ const shifts = {
         { photo: profile3, name: "Participant 3" },
       ],
       totalParticipants: 16,
+      approvalRequests: [
+        {
+          id: 1,
+          name: "שחר טל",
+          role: "בקשת הצטרפות",
+          type: "משמרת מנהרה",
+          profilePic: profile1,
+        },
+        {
+          id: 2,
+          name: "מאיה אלחנזו",
+          role: "בקשת הצטרפות",
+          type: "למערך",
+          profilePic: profile2,
+        },
+      ],
     },
     {
       date: "יום שני, 8 ביולי",
@@ -121,6 +174,36 @@ const shifts = {
         { photo: profile3, name: "Participant 3" },
       ],
       totalParticipants: 16,
+      approvalRequests: [
+        {
+          id: 1,
+          name: "שחר טל",
+          role: "בקשת הצטרפות",
+          type: "משמרת מנהרה",
+          profilePic: profile1,
+        },
+        {
+          id: 2,
+          name: "מאיה אלחנזו",
+          role: "בקשת הצטרפות",
+          type: "למערך",
+          profilePic: profile2,
+        },
+        {
+          id: 3,
+          name: "גיא ארז",
+          role: "בקשת הצטרפות",
+          type: "משמרת דוכן",
+          profilePic: profile3,
+        },
+        {
+          id: 4,
+          name: "שרית מלכה",
+          role: "בקשת הצטרפות",
+          type: "למערך",
+          profilePic: profile1,
+        },
+      ],
     },
   ],
   /*  סוג4: [

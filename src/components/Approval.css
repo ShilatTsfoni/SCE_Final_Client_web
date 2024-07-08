@@ -1,0 +1,114 @@
+.approval-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 310px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+  direction: rtl;
+}
+
+.approval-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-top: -10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.approval-modal-header h1 {
+  font-family: "Assistant";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  text-align: right;
+}
+
+.approval-close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.approval-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-left: 10px;
+  max-height: 250px; /* Adjust this height as needed */
+  overflow-y: auto; /* Make it scrollable */
+}
+
+.approval-request {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.approval-profile-pic {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.request-info {
+  flex-grow: 1;
+}
+
+.request-name {
+  font-family: "Assistant";
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: right;
+}
+
+.request-role,
+.request-type {
+  font-family: "Assistant";
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: right;
+}
+
+.request-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.approve-button,
+.deny-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+  top: 76px;
+  left: 70px;
+  gap: 0px;
+  opacity: 0px;
+  font-family: "Assistant";
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.approve-button {
+  background-color: #1355cb;
+  color: #fafcfe;
+}
+
+.deny-button {
+  background-color: #f2f2f7;
+  color: #000000;
+}
