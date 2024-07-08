@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Shifts.css";
 import ShiftCard from "../components/ShiftCard";
 import ShiftsNavbar from "../components/ShiftsNavbar";
 import AddShift from "../components/AddShift";
+import EditShift from "../components/EditShift";
 import shifts from "../data/ShiftsData";
 import { ReactComponent as MorningIcon } from "../assets/morning icon.svg";
 import { ReactComponent as NoonIcon } from "../assets/noon icon.svg";
@@ -52,6 +53,8 @@ const Shifts = () => {
   const [, setTick] = useState(0); // State to force rerender
   const [showAddShift, setShowAddShift] = useState(false);
   const [addButtonRef, setAddButtonRef] = useState(null); // To store the ref from Navbar
+  const [editShiftData, setEditShiftData] = useState(null); // To store the shift data for editing
+  const editShiftRef = useRef(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -88,6 +91,26 @@ const Shifts = () => {
   const toggleAddShift = (ref) => {
     setAddButtonRef(ref); // Get the ref from Navbar when "+" is clicked
     setShowAddShift(!showAddShift);
+  };
+
+  const openEditShift = (shift, type, position) => {
+    const { date, time, title, participants, totalParticipants } = shift;
+    const [startTime, endTime] = time.split("-").map((t) => t.trim());
+
+    setEditShiftData({
+      type,
+      date,
+      startTime,
+      endTime,
+      position: {
+        top: position.top + window.scrollY,
+        left: position.left,
+      },
+    });
+  };
+
+  const closeEditShift = () => {
+    setEditShiftData(null);
   };
 
   return (
@@ -138,7 +161,13 @@ const Shifts = () => {
                       .filter((shift) => getTimeSlot(shift.time) === label)
                       .map((shift, i) => (
                         <div key={i} className="shift-card-wrapper">
-                          <ShiftCard {...shift} />
+                          <ShiftCard
+                            {...shift}
+                            type={type}
+                            onEdit={(position) =>
+                              openEditShift(shift, type, position)
+                            }
+                          />
                         </div>
                       ))
                   ) : (
@@ -166,6 +195,25 @@ const Shifts = () => {
           ))}
         </div>
       </div>
+      {editShiftData && (
+        <>
+          <div className="backdrop" onClick={closeEditShift}></div>
+          <div
+            className="edit-shift-container"
+            style={{
+              position: "absolute",
+            }}
+          >
+            <EditShift
+              shiftType={editShiftData.type}
+              initialDate={editShiftData.date}
+              initialStartTime={editShiftData.startTime}
+              initialEndTime={editShiftData.endTime}
+              onClose={closeEditShift}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

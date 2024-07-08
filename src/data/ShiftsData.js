@@ -5,6 +5,7 @@ import profile3 from "../assets/profile3.jpg";
 const shifts = {
   מנהרה: [
     {
+      date: "יום שני, 8 ביולי",
       time: "09:00-12:00",
       title: 'אחמ"ש - עדי כהן',
       participants: [
@@ -28,7 +29,8 @@ const shifts = {
       totalParticipants: 16,
     },
     {
-      time: "13:00-17:00",
+      date: "יום שני, 8 ביולי",
+      time: "13:00-18:00",
       title: 'אחמ"ש - עדי כהן',
       participants: [
         { photo: profile1, name: "Participant 1" },
@@ -46,6 +48,7 @@ const shifts = {
   ],
   דוכן: [
     {
+      date: "יום שני, 8 ביולי",
       time: "09:00-12:00",
       title: 'אחמ"ש - עדי כהן',
       participants: [
@@ -58,6 +61,7 @@ const shifts = {
       totalParticipants: 16,
     },
     {
+      date: "יום שני, 8 ביולי",
       time: "18:00-22:00",
       title: 'אחמ"ש - עדי כהן',
       participants: [
@@ -72,6 +76,7 @@ const shifts = {
   ],
   הסברה: [
     {
+      date: "יום שני, 8 ביולי",
       time: "09:00-12:00",
       title: 'אחמ"ש - עדי כהן',
       participants: [
@@ -88,6 +93,7 @@ const shifts = {
       totalParticipants: 16,
     },
     {
+      date: "יום שני, 8 ביולי",
       time: "13:00-17:00",
       title: 'אחמ"ש - עדי כהן',
       participants: [
@@ -100,6 +106,7 @@ const shifts = {
       totalParticipants: 16,
     },
     {
+      date: "יום שני, 8 ביולי",
       time: "18:00-21:15",
       title: 'אחמ"ש - עדי כהן',
       participants: [
@@ -118,6 +125,7 @@ const shifts = {
   ],
   /*  סוג4: [
     {
+        date: "יום שני, 8 ביולי",
       time: "09:00-12:00",
       title: 'אחמ"ש - עדי כהן',
       participants: [
@@ -134,6 +142,7 @@ const shifts = {
       totalParticipants: 16,
     },
     {
+          date: "יום שני, 8 ביולי",
       time: "13:00-17:00",
       title: 'אחמ"ש - עדי כהן',
       participants: [
@@ -146,6 +155,7 @@ const shifts = {
       totalParticipants: 16,
     },
     {
+          date: "יום שני, 8 ביולי",
       time: "18:00-21:15",
       title: 'אחמ"ש - עדי כהן',
       participants: [

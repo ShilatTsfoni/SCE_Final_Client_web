@@ -21,7 +21,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(10, 16, 13, 0.5); /* The shadow color */
-  display: block; /* Hidden by default */
+  display: none; /* Hidden by default */
   pointer-events: none; /* Allows interaction with elements underneath */
 }
 
