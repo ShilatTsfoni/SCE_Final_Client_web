@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import Approval from "./Approval";
 import { ReactComponent as EditIcon } from "../assets/edit icon.svg";
 import { ReactComponent as ClockIcon } from "../assets/clock icon.svg";
 import { ReactComponent as MessagesIcon } from "../assets/Messages icon.svg";
@@ -13,8 +14,12 @@ const ShiftCard = ({
   totalParticipants,
   type,
   onEdit,
+  approvalRequests = [],
 }) => {
   const cardRef = useRef(null);
+  const [showApprovalModal, setShowApprovalModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const getColor = (current, total) => {
     const ratio = current / total;
@@ -37,11 +42,11 @@ const ShiftCard = ({
   // Correctly handle time comparison
   const isPast = currentTime > endTime;
 
-  useEffect(() => {
+  /*   useEffect(() => {
     console.log("Current time:", currentTime);
     console.log("End time:", endTime);
     console.log("Is past:", isPast);
-  }, [currentTime, endTime, isPast]);
+  }, [currentTime, endTime, isPast]); */
 
   const handleEditClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -50,6 +55,28 @@ const ShiftCard = ({
       left: rect.left + window.scrollX,
     };
     onEdit(position, date, time, title, type);
+  };
+
+  const handleAddTaskClick = () => {
+    if (approvalRequests.length === 0) {
+      setToastMessage("אין בקשות הממתינות לאישור");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } else {
+      setShowApprovalModal(true);
+    }
+  };
+
+  const handleApprove = () => {
+    setToastMessage("הבקשה אושרה בהצלחה");
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
+
+  const handleDeny = () => {
+    setToastMessage("הבקשה נדחתה בהצלחה");
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
   };
 
   return (
@@ -91,8 +118,13 @@ const ShiftCard = ({
         </div>
       </div>
       <div className="footer">
+        <div className="add-task-icon-container" onClick={handleAddTaskClick}>
+          <AddTaskIcon className="add-task-icon" />
+          {approvalRequests.length > 0 && (
+            <div className="notification-badge">{approvalRequests.length}</div>
+          )}
+        </div>
         <MessagesIcon className="messages-icon" />
-        <AddTaskIcon className="add-task-icon" />
         <div className="participants">
           {participants.length > 4 && (
             <div className="extra-participants">{`+${
@@ -108,6 +140,17 @@ const ShiftCard = ({
             />
           ))}
         </div>
+      </div>
+      {showApprovalModal && (
+        <Approval
+          onClose={() => setShowApprovalModal(false)}
+          requests={approvalRequests}
+          onApprove={handleApprove}
+          onDeny={handleDeny}
+        />
+      )}
+      <div className={`shift-card-toast ${showToast ? "show" : ""}`}>
+        {toastMessage}
       </div>
     </div>
   );

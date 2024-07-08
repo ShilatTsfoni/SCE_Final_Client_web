@@ -167,6 +167,7 @@ const Shifts = () => {
                             onEdit={(position) =>
                               openEditShift(shift, type, position)
                             }
+                            approvalRequests={shift.approvalRequests || []} // Pass approval requests
                           />
                         </div>
                       ))
