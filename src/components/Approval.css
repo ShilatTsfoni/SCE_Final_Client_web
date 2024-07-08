@@ -112,3 +112,13 @@
   background-color: #f2f2f7;
   color: #000000;
 }
+
+.approval-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a100d66;
+  z-index: 1000;
+}

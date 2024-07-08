@@ -142,12 +142,18 @@ const ShiftCard = ({
         </div>
       </div>
       {showApprovalModal && (
-        <Approval
-          onClose={() => setShowApprovalModal(false)}
-          requests={approvalRequests}
-          onApprove={handleApprove}
-          onDeny={handleDeny}
-        />
+        <>
+          <div
+            className="approval-backdrop"
+            onClick={() => setShowApprovalModal(false)}
+          ></div>
+          <Approval
+            onClose={() => setShowApprovalModal(false)}
+            requests={approvalRequests}
+            onApprove={handleApprove}
+            onDeny={handleDeny}
+          />
+        </>
       )}
       <div className={`shift-card-toast ${showToast ? "show" : ""}`}>
         {toastMessage}

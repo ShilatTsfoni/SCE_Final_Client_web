@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import "./Navbar.css";
-//import notificationsIcon from "../assets/notifications icon.svg";
-//import messagesIcon from "../assets/Messages icon.svg";
+import React, { useState, useRef } from "react";
 import homePageLogo from "../assets/homePageLogo.png";
 import { ReactComponent as NotificationsIcon } from "../assets/notifications icon.svg";
 import { ReactComponent as MessagesIcon } from "../assets/Messages icon.svg";
+import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ onNotificationsClick }) => {
   const [activeIcon, setActiveIcon] = useState(null); // State to track active icon
+  const notificationIconRef = useRef(null);
 
   const getGreeting = () => {
     const hours = new Date().getHours();
@@ -18,13 +17,26 @@ const Navbar = () => {
   };
 
   const handleIconClick = (icon) => {
-    setActiveIcon(icon === activeIcon ? null : icon); // Toggle active state
+    if (icon === activeIcon) {
+      setActiveIcon(null); // Deselect the active icon
+    } else {
+      setActiveIcon(icon); // Select the new icon
+    }
+
+    if (icon === "bell" && notificationIconRef.current) {
+      const rect = notificationIconRef.current.getBoundingClientRect();
+      onNotificationsClick({
+        top: rect.bottom + window.scrollY + 10,
+        left: rect.left + window.scrollX - 150,
+      });
+    }
   };
 
   return (
     <div className="navbar">
       <div className="navbar-left">
         <NotificationsIcon
+          ref={notificationIconRef}
           style={{ color: "#000000" }}
           className={`notification-icon ${
             activeIcon === "bell" ? "active" : ""
