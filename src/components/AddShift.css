@@ -89,6 +89,10 @@
   cursor: pointer;
 }
 
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
 .detail-entry {
   display: flex;
   align-items: center;
@@ -152,6 +156,21 @@
   line-height: 24px;
   text-align: right;
   margin-right: 450px;
+}
+
+.add-shift .date-time-entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-shift .date-time-entry select {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.add-shift .detail-entry {
+  margin-bottom: 15px;
 }
 
 .toast {
