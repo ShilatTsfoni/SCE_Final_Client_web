@@ -11,7 +11,13 @@ import "./AddShift.css";
 const AddShift = ({ onClose }) => {
   const [detailText, setDetailText] = useState({
     shiftType: "בחר משמרת",
-    date: "",
+    day: "",
+    month: "",
+    year: "",
+    startHour: "",
+    startMinute: "",
+    endHour: "",
+    endMinute: "",
     manager: "",
     participants: "",
     location: "",
@@ -21,6 +27,29 @@ const AddShift = ({ onClose }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const shiftTypes = ["מנהרה", "דוכן", "הסברה"];
+
+  const days = Array.from({ length: 31 }, (_, i) => i + 1);
+  const months = [
+    "ינואר",
+    "פברואר",
+    "מרץ",
+    "אפריל",
+    "מאי",
+    "יוני",
+    "יולי",
+    "אוגוסט",
+    "ספטמבר",
+    "אוקטובר",
+    "נובמבר",
+    "דצמבר",
+  ];
+  const years = Array.from(
+    { length: 10 },
+    (_, i) => new Date().getFullYear() + i
+  );
+  const hours = Array.from({ length: 24 }, (_, i) => i);
+  const minutes = Array.from({ length: 60 }, (_, i) => i);
+  const participants = Array.from({ length: 100 }, (_, i) => i + 1);
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -36,11 +65,29 @@ const AddShift = ({ onClose }) => {
   };
 
   const handleAddShift = () => {
-    const { shiftType, date, manager, participants, location, description } =
-      detailText;
+    const {
+      shiftType,
+      day,
+      month,
+      year,
+      startHour,
+      startMinute,
+      endHour,
+      endMinute,
+      manager,
+      participants,
+      location,
+      description,
+    } = detailText;
     if (
       shiftType !== "בחר משמרת" &&
-      date &&
+      day &&
+      month &&
+      year &&
+      startHour &&
+      startMinute &&
+      endHour &&
+      endMinute &&
       manager &&
       participants &&
       location &&
@@ -82,30 +129,105 @@ const AddShift = ({ onClose }) => {
         )}
         <div className="detail-entry">
           <ShiftsIcon />
-          <input
-            type="text"
-            placeholder="הוספת תאריך ושעה"
-            value={detailText.date}
-            onChange={(e) => handleChange("date", e.target.value)}
-          />
+          <div className="date-time-entry">
+            <select
+              value={detailText.day}
+              onChange={(e) => handleChange("day", e.target.value)}
+            >
+              <option value="">יום</option>
+              {days.map((day) => (
+                <option key={day} value={day}>
+                  {day}
+                </option>
+              ))}
+            </select>
+            <select
+              value={detailText.month}
+              onChange={(e) => handleChange("month", e.target.value)}
+            >
+              <option value="">חודש</option>
+              {months.map((month, index) => (
+                <option key={index} value={month}>
+                  {month}
+                </option>
+              ))}
+            </select>
+            <select
+              value={detailText.year}
+              onChange={(e) => handleChange("year", e.target.value)}
+            >
+              <option value="">שנה</option>
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="detail-entry">
-          <ShiftManagerIcon />
-          <input
-            type="text"
-            placeholder="אחראי/ת משמרת"
-            value={detailText.manager}
-            onChange={(e) => handleChange("manager", e.target.value)}
-          />
+          <ShiftsIcon />
+          <div className="date-time-entry">
+            <select
+              value={detailText.startHour}
+              onChange={(e) => handleChange("startHour", e.target.value)}
+            >
+              <option value="">שעה התחלתית</option>
+              {hours.map((hour) => (
+                <option key={hour} value={hour}>
+                  {hour}
+                </option>
+              ))}
+            </select>
+            <select
+              value={detailText.startMinute}
+              onChange={(e) => handleChange("startMinute", e.target.value)}
+            >
+              <option value="">דקה התחלתית</option>
+              {minutes.map((minute) => (
+                <option key={minute} value={minute}>
+                  {minute}
+                </option>
+              ))}
+            </select>
+            <span>-</span>
+            <select
+              value={detailText.endHour}
+              onChange={(e) => handleChange("endHour", e.target.value)}
+            >
+              <option value="">שעה סופית</option>
+              {hours.map((hour) => (
+                <option key={hour} value={hour}>
+                  {hour}
+                </option>
+              ))}
+            </select>
+            <select
+              value={detailText.endMinute}
+              onChange={(e) => handleChange("endMinute", e.target.value)}
+            >
+              <option value="">דקה סופית</option>
+              {minutes.map((minute) => (
+                <option key={minute} value={minute}>
+                  {minute}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="detail-entry">
           <VolunteersIcon />
-          <input
-            type="text"
-            placeholder="הוספת כמות/משתתפים"
+          <select
             value={detailText.participants}
             onChange={(e) => handleChange("participants", e.target.value)}
-          />
+          >
+            <option value="">הוספת כמות/משתתפים</option>
+            {participants.map((participant) => (
+              <option key={participant} value={participant}>
+                {participant}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="detail-entry">
           <LocationIcon />
