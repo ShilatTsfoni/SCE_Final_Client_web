@@ -79,7 +79,8 @@ const AddShift = ({ onClose }) => {
       location,
       description,
     } = detailText;
-    if (
+
+    const allFieldsFilled =
       shiftType !== "בחר משמרת" &&
       day &&
       month &&
@@ -91,10 +92,13 @@ const AddShift = ({ onClose }) => {
       manager &&
       participants &&
       location &&
-      description
-    ) {
+      description;
+
+    if (allFieldsFilled) {
+      console.log(detailText); // Print shift details to the console
       onClose(); // Close the window if all fields are filled
     } else {
+      console.log("Validation failed, missing fields:", detailText);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000); // Hide the toast after 3 seconds
     }
@@ -214,6 +218,15 @@ const AddShift = ({ onClose }) => {
               ))}
             </select>
           </div>
+        </div>
+        <div className="detail-entry">
+          <ShiftManagerIcon />
+          <input
+            type="text"
+            placeholder="אחראי/ת משמרת"
+            value={detailText.manager}
+            onChange={(e) => handleChange("manager", e.target.value)}
+          />
         </div>
         <div className="detail-entry">
           <VolunteersIcon />
