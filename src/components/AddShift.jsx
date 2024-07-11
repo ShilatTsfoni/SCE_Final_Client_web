@@ -7,7 +7,74 @@ import { ReactComponent as LocationIcon } from "../assets/location icon.svg";
 import { ReactComponent as DescriptionIcon } from "../assets/description icon.svg";
 import { ReactComponent as ArrowDownIcon } from "../assets/errow down icon.svg";
 import "./AddShift.css";
+const API_URL = 'http://127.0.0.1:8000/api/shifts/'
+const formatDateTime = (day, month, year, hour, minute) => {
+  // Ensure two digits for day, month, hour, and minute
+  const twoDigit = (num) => num.toString().padStart(2, '0');
 
+  // Format the date and time
+  return `${year}-${twoDigit(month)}-${twoDigit(day)}T${twoDigit(hour)}:${twoDigit(minute)}:00`;
+};
+
+const calculateDurationForDjango = (startHour, startMinute, endHour, endMinute) => {
+  // Create date objects for the start and end times
+  const startDate = new Date();
+  startDate.setHours(startHour);
+  startDate.setMinutes(startMinute);
+  startDate.setSeconds(0);
+  startDate.setMilliseconds(0);
+
+  const endDate = new Date();
+  endDate.setHours(endHour);
+  endDate.setMinutes(endMinute);
+  endDate.setSeconds(0);
+  endDate.setMilliseconds(0);
+
+  // Calculate the difference in milliseconds
+  const diffInMilliseconds = endDate - startDate;
+
+  // Convert milliseconds to minutes
+  const diffInMinutes = diffInMilliseconds / 1000 / 60;
+
+  // Calculate hours and remaining minutes
+  const diffHours = Math.floor(diffInMinutes / 60);
+  const diffMinutes = diffInMinutes % 60;
+
+  // Format as ISO 8601 duration string
+  const durationString = `PT${diffHours}H${diffMinutes}M`;
+
+  return durationString;
+};
+const prepareData = (shiftType,day, month, year, startHour, startMinute, endHour, endMinute, manager, participants, location, description) => {
+  return {
+    name:shiftType,
+    start_date: formatDateTime(day, month, year, startHour, startMinute),
+    duration: calculateDurationForDjango(startHour,startMinute,endHour,endMinute),
+    shift_manager: 2,
+    max_volunteers: participants,
+    location: location,
+    description: description,
+    organization:1,
+    recurring:false,
+    organization_id:1
+
+  };
+};
+const sendDataToApi = async (json_data) => {
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(json_data)
+  });
+
+  if (!response.ok) {
+    console.error('Failed to send data');
+  } else {
+    console.log('Data sent successfully');
+  }
+};
 const AddShift = ({ onClose }) => {
   const [detailText, setDetailText] = useState({
     shiftType: "בחר משמרת",
@@ -30,18 +97,7 @@ const AddShift = ({ onClose }) => {
 
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const months = [
-    "ינואר",
-    "פברואר",
-    "מרץ",
-    "אפריל",
-    "מאי",
-    "יוני",
-    "יולי",
-    "אוגוסט",
-    "ספטמבר",
-    "אוקטובר",
-    "נובמבר",
-    "דצמבר",
+    1,2,3,4,5,6,7,8,9,10,11,12
   ];
   const years = Array.from(
     { length: 10 },
@@ -88,11 +144,15 @@ const AddShift = ({ onClose }) => {
       startMinute &&
       endHour &&
       endMinute &&
-      manager &&
+      //manager &&
       participants &&
       location &&
       description
     ) {
+      let json_data = prepareData(shiftType,day,month,year,startHour,startMinute,endHour,endMinute,manager,participants,location,description)
+      console.log(json_data)
+      let ans = sendDataToApi(json_data)
+      console.log(ans)
       onClose(); // Close the window if all fields are filled
     } else {
       setShowToast(true);
