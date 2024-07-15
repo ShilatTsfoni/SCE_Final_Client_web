@@ -86,6 +86,7 @@
   right: 0;
   display: flex;
   align-items: center;
+  margin-left: 230px; /*added because the shifts changed it*/
 }
 
 .title {
@@ -162,7 +163,12 @@
 .footer {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ensures icons are on the right */
+  /*justify-content: space-between; /* Ensures icons are on the right */
+}
+
+.add-task-icon {
+  /*if there is a problem with the footer- change this*/
+  margin-left: 10px;
 }
 
 .participants {
