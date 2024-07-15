@@ -311,6 +311,15 @@ const AddShift = ({ onClose }) => {
           </div>
         </div>
         <div className="detail-entry">
+          <ShiftManagerIcon />
+          <input
+            type="text"
+            placeholder="אחראי/ת משמרת"
+            value={detailText.manager}
+            onChange={(e) => handleChange("manager", e.target.value)}
+          />
+        </div>
+        <div className="detail-entry">
           <VolunteersIcon />
           <select
             value={detailText.participants}

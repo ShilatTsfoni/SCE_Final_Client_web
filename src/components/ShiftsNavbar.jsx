@@ -6,18 +6,22 @@ import AddShift from "./AddShift";
 import ShiftCard from "./ShiftCard";
 import "./ShiftsNavbar.css";
 
-const ShiftsNavbar = ({ activeVolunteers, staffedShifts }) => {
+const ShiftsNavbar = ({ activeVolunteers, staffedShifts, onDateChange }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [pickerOpen, setPickerOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("יום");
   const [addShiftOpen, setAddShiftOpen] = useState(false);
 
   const handlePreviousDay = () => {
-    setCurrentDate(new Date(currentDate.setDate(currentDate.getDate() - 1)));
+    const newDate = new Date(currentDate.setDate(currentDate.getDate() - 1));
+    setCurrentDate(newDate);
+    onDateChange(newDate); // Notify parent about the date change
   };
 
   const handleNextDay = () => {
-    setCurrentDate(new Date(currentDate.setDate(currentDate.getDate() + 1)));
+    const newDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+    setCurrentDate(newDate);
+    onDateChange(newDate); // Notify parent about the date change
   };
 
   const formatDate = (date) => {

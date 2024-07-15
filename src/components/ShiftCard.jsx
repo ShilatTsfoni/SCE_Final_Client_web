@@ -10,6 +10,7 @@ const ShiftCard = ({
   date,
   time,
   title,
+  manager,
   participants,
   totalParticipants,
   type,
@@ -94,7 +95,7 @@ const ShiftCard = ({
           <span>{time}</span>
         </div>
       </div>
-      <div className="title">{title}</div>
+      <div className="title">{manager}</div>
       <div className="participant-status">
         <div className="participant-text">
           {participants.length}/{totalParticipants}
