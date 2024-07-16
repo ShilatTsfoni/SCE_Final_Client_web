@@ -1,0 +1,148 @@
+.chats-sidebar {
+  width: 300px;
+  height: 100vh; /* Set width to 100% of the viewport height */
+  border-left: 1px solid #ccc;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  background-color: white;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 285px;
+  height: 32px;
+}
+
+.header h3 {
+  font-family: "Assistant";
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  text-align: right;
+}
+
+.new-chat-icon {
+  cursor: pointer;
+}
+
+.search-bar {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 96%;
+  padding: 10px 10px 10px 0px; /* Add padding-right to make room for the icon */
+  border: 1px solid #f7f7fc;
+  border-radius: 20px;
+  font-family: "Assistant";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  text-align: right;
+  background-color: #f7f7fc;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.chat-categories {
+  display: flex;
+  margin-bottom: 20px;
+  right: 0;
+}
+
+.chat-categories button {
+  flex: 1;
+  width: 47px;
+  height: 32px;
+  padding: 8px;
+  border: none;
+  border-radius: 16px;
+  background-color: white;
+  cursor: pointer;
+  margin: 0 30px;
+  font-family: "Assistant";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.chat-categories button.active {
+  background-color: #e6f4ff;
+  color: #003eac;
+}
+
+.chat-list {
+  overflow-y: auto;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.chat-item:hover,
+.chat-item.selected {
+  background-color: #f0f0f0;
+}
+
+.chat-item.selected {
+  background-color: #e6f4ff; /* Highlight color for the selected chat */
+  border-radius: 10px;
+}
+
+.chat-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.chat-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.chat-name {
+  font-weight: bold;
+}
+
+.chat-message-preview {
+  display: flex;
+  justify-content: space-between;
+  color: #777;
+}
+
+.chat-meta {
+  display: flex;
+  justify-content: flex-end;
+  color: #999;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.chat-time {
+  margin-left: 10px;
+}
+
+.chat-status {
+  margin-right: 10px;
+}

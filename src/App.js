@@ -5,6 +5,7 @@ import MessagesNotifications from "./components/MessagesNotifications";
 import Sidebar from "./components/Sidebar";
 import Shifts from "./Pages/Shifts";
 import Volunteers from "./Pages/Volunteers";
+import Messages from "./Pages/Messages";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/" element={<Shifts />} />
           <Route path="/shifts" element={<Shifts />} />
           <Route path="/volunteers" element={<Volunteers />} />
+          <Route path="/messages" element={<Messages />} />
           {/* Additional routes can be defined here */}
         </Routes>
       </div>

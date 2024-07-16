@@ -1,0 +1,21 @@
+.messages-container {
+  display: flex;
+  direction: rtl;
+  height: calc(100vh - 64px); /* Assuming the navbar height is 64px */
+  width: calc(100vw - 210px); /* Assuming the sidebar width is 100px */
+}
+
+.chats-sidebar {
+  width: 300px;
+  border-left: 1px solid #ccc;
+  padding: 20px;
+  background-color: white;
+  overflow-y: auto;
+}
+
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7fc;
+}
