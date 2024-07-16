@@ -3,6 +3,8 @@ body {
   flex-direction: column;
   font-family: "Assistant", sans-serif;
   background-color: #f7f7fc;
+  overflow: hidden;
+  margin: 0; /* Remove default margin */
 }
 
 .app-container {
