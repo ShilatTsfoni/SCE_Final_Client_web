@@ -106,7 +106,7 @@ const Volunteers = () => {
 
   return (
     <div className="volunteer-table">
-      <div className="header">
+      <div className="volunteers-header">
         <h1>מתנדבים</h1>
         <div className="search-box">
           <SearchIcon />
