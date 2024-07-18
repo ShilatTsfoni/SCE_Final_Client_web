@@ -59,6 +59,7 @@ const Shifts = () => {
   const [editShiftData, setEditShiftData] = useState(null); // To store the shift data for editing
   const [shifts, setShifts] = useState({});
   const editShiftRef = useRef(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -67,6 +68,10 @@ const Shifts = () => {
 
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    fetchShifts(selectedDate);
+  }, [selectedDate]);
 
   const profiles = [profile1, profile2, profile3];
 

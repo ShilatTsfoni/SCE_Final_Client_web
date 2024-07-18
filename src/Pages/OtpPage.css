@@ -1,0 +1,77 @@
+body {
+  font-family: "Assistant";
+}
+
+.otp-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f7f7fc;
+  font-family: "Assistant";
+  text-align: center;
+}
+
+.otp-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.otp-container input {
+  width: 80%;
+  max-width: 400px;
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #dcdce5; /* Gray color for the border */
+  border-radius: 4px;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: "Assistant";
+  color: #333;
+}
+
+.verify-button {
+  width: 80%;
+  max-width: 400px;
+  padding: 15px;
+  margin: 20px 0;
+  background-color: #b9b9c9; /* Gray color for the button */
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Assistant";
+}
+
+.verify-button.active {
+  background-color: #003eac; /* Blue color for active button */
+  color: white;
+}
+
+.verify-button:disabled {
+  background-color: #b9b9c9;
+  cursor: not-allowed;
+}
+
+.resend-button {
+  color: #1355cb; /* Color for the resend button */
+  background-color: inherit;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Assistant";
+  margin-top: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 1rem;
+}

@@ -1,16 +1,16 @@
 .volunteer-table {
   display: flex;
-  width: 1251px;
-  height: 848px;
+  width: calc(100% - 150px); /* Assuming sidebar is 200px wide */
+  height: calc(100vh - 64px); /* Assuming navbar is 64px tall */
   gap: 32px;
   flex-direction: column;
   padding: 16px;
   background-color: #ffffff;
-  margin-top: 75px;
-  margin-left: 970px;
+  /*margin-left: 970px;*/
+  margin-top: 35px;
 }
 
-.header {
+.volunteers-header {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,7 +19,7 @@
   gap: 16px;
 }
 
-.header h1 {
+.volunteers-header h1 {
   font-family: "Assistant";
   font-size: 32px;
   font-weight: 600;

@@ -29,16 +29,17 @@
   display: block; /* Show the overlay when past */
 }
 
-.header {
+.shift-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: -10px;
   padding: 0 10px;
   position: relative;
+  direction: rtl;
 }
 
-.header span {
+.shift-card-header span {
   flex-grow: 1;
   text-align: right;
   margin-right: 5px;
@@ -86,7 +87,7 @@
   right: 0;
   display: flex;
   align-items: center;
-  margin-left: 230px; /*added because the shifts changed it*/
+  /*margin-left: 230px; /*added because the shifts changed it*/
 }
 
 .title {

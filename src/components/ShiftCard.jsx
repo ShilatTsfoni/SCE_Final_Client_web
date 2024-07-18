@@ -86,7 +86,7 @@ const ShiftCard = ({
       className={`shift-card ${isPast ? "past" : ""}`}
       style={{ borderColor: color }}
     >
-      <div className="header">
+      <div className="shift-card-header">
         <div className="edit-icon-container" onClick={handleEditClick}>
           <EditIcon className="edit-icon" />
         </div>

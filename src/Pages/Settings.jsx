@@ -1,9 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./Settings.css";
 
-const Settings = () => {
+const Settings = ({ onLogout }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    onLogout();
+    navigate("/");
+  };
+
   return (
-    <div>
-      <h1>settings Page</h1>
+    <div className="settings-container">
+      <h1>Settings</h1>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };
