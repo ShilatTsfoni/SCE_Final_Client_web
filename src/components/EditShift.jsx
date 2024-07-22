@@ -14,6 +14,11 @@ const EditShift = ({
   initialDate,
   initialStartTime,
   initialEndTime,
+  shiftId,
+  initialName,
+  iniitalOrganizationId,
+  initialStartDate,
+  onShiftDeleted,
 }) => {
   const [detailText, setDetailText] = useState({
     shiftType: shiftType,
@@ -33,31 +38,62 @@ const EditShift = ({
     setDetailText((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSaveShift = () => {
-    const {
-      date,
-      startTime,
-      endTime,
-      manager,
-      participants,
-      location,
-      description,
-    } = detailText;
-    if (
-      date &&
-      startTime &&
-      endTime &&
-      manager &&
-      participants &&
-      location &&
-      description
-    ) {
-      setToastMessage("השינויים נשמרו בהצלחה");
-      setShowToast(true);
-      setTimeout(() => {
-        setShowToast(false);
-        onClose();
-      }, 3000);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  const formattedDate = formatDate(detailText.date);
+
+  const handleSaveShift = async () => {
+    const { manager, participants, location, description } = detailText;
+
+    if (manager && participants && location && description) {
+      const updatedShift = {
+        description: description,
+        max_volunteers: parseInt(participants, 10), // Convert participants to an integer
+        shift_manager: manager,
+        organization_id: iniitalOrganizationId,
+        name: initialName,
+        start_date: initialStartDate,
+        organization: iniitalOrganizationId,
+      };
+
+      console.log("Request Payload:", updatedShift); // Log the request payload
+
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/shifts/${shiftId}/`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedShift),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Error response data:", errorData); // Log error response
+          throw new Error("Failed to update shift");
+        }
+
+        const data = await response.json();
+        console.log("Shift updated successfully:", data);
+
+        setToastMessage("השינויים נשמרו בהצלחה");
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+          onClose();
+        }, 3000);
+      } catch (error) {
+        console.error("Error updating shift:", error);
+      }
     } else {
       setToastMessage("אנא מלאו את כל השדות");
       setShowToast(true);
@@ -65,13 +101,32 @@ const EditShift = ({
     }
   };
 
-  const handleDeleteShift = () => {
-    setToastMessage("המשמרת נמחקה בהצלחה");
-    setShowToast(true);
-    setTimeout(() => {
-      setShowToast(false);
-      onClose();
-    }, 3000);
+  const handleDeleteShift = async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/shifts/${shiftId}/`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete shift");
+      }
+
+      setToastMessage("המשמרת נמחקה בהצלחה");
+      setShowToast(true);
+      setTimeout(() => {
+        setShowToast(false);
+        onClose();
+        onShiftDeleted(shiftId); // Notify parent component about the deletion
+      }, 3000);
+    } catch (error) {
+      console.error("Error deleting shift:", error);
+      setToastMessage("מחיקת המשמרת נכשלה");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    }
   };
 
   return (
@@ -92,8 +147,8 @@ const EditShift = ({
           <ClockIcon />
           <input
             type="text"
-            placeholder={`${detailText.date} ${detailText.startTime} - ${detailText.endTime}`}
-            value={`${detailText.date} ${detailText.startTime} - ${detailText.endTime}`}
+            placeholder={`${formattedDate} ${detailText.startTime} - ${detailText.endTime}`}
+            value={`${formattedDate} ${detailText.startTime} - ${detailText.endTime}`}
             onChange={(e) => handleChange("dateTime", e.target.value)}
           />
         </div>

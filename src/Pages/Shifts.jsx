@@ -77,6 +77,7 @@ const Shifts = () => {
 
   const fetchShifts = async (date) => {
     const formattedDate = date.toISOString().split("T")[0];
+    console.log(formattedDate);
 
     try {
       const response = await fetch(
@@ -117,6 +118,11 @@ const Shifts = () => {
         if (!acc[shift.name]) acc[shift.name] = [];
 
         acc[shift.name].push({
+          id: shift.id,
+          organization_id: shift.organization_id,
+          name: shift.name,
+          start_date: shift.start_date,
+          organization: shift.organization_id,
           date: shift.start_date,
           time: `${shift.start_date.split("T")[1].slice(0, 5)}-${endDate
             .toISOString()
@@ -173,15 +179,34 @@ const Shifts = () => {
     setShowAddShift(!showAddShift);
   };
 
-  const openEditShift = (shift, type, position) => {
-    const { date, time, title, participants, totalParticipants } = shift;
+  const openEditShift = (position, shift) => {
+    const {
+      id,
+      date,
+      time,
+      title,
+      manager,
+      participants,
+      totalParticipants,
+      name,
+      organization_id,
+      start_date,
+    } = shift;
     const [startTime, endTime] = time.split("-").map((t) => t.trim());
 
     setEditShiftData({
-      type,
+      id,
+      type: title,
       date,
       startTime,
       endTime,
+      manager,
+      participants: participants.length.toString(),
+      location: "",
+      description: "",
+      name,
+      organization_id,
+      start_date,
       position: {
         top: position.top + window.scrollY,
         left: position.left,
@@ -190,6 +215,19 @@ const Shifts = () => {
   };
 
   const closeEditShift = () => {
+    setEditShiftData(null);
+  };
+
+  const handleShiftDeleted = (deletedShiftId) => {
+    setShifts((prevShifts) => {
+      const updatedShifts = { ...prevShifts };
+      for (const key in updatedShifts) {
+        updatedShifts[key] = updatedShifts[key].filter(
+          (shift) => shift.id !== deletedShiftId
+        );
+      }
+      return updatedShifts;
+    });
     setEditShiftData(null);
   };
 
@@ -268,7 +306,7 @@ const Shifts = () => {
                             {...shift}
                             type={name}
                             onEdit={(position) =>
-                              openEditShift(shift, name, position)
+                              openEditShift(position, shift)
                             }
                             approvalRequests={shift.approvalRequests || []} // Pass approval requests
                           />
@@ -316,7 +354,12 @@ const Shifts = () => {
               initialDate={editShiftData.date}
               initialStartTime={editShiftData.startTime}
               initialEndTime={editShiftData.endTime}
+              shiftId={editShiftData.id}
+              initialName={editShiftData.name}
+              iniitalOrganizationId={editShiftData.organization_id}
+              initialStartDate={editShiftData.start_date}
               onClose={closeEditShift}
+              onShiftDeleted={handleShiftDeleted}
             />
           </div>
         </>

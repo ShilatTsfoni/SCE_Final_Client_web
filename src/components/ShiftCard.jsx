@@ -7,6 +7,7 @@ import { ReactComponent as AddTaskIcon } from "../assets/add_task icon.svg";
 import "./ShiftCard.css";
 
 const ShiftCard = ({
+  id,
   date,
   time,
   title,
@@ -55,7 +56,16 @@ const ShiftCard = ({
       top: rect.bottom + window.scrollY,
       left: rect.left + window.scrollX,
     };
-    onEdit(position, date, time, title, type);
+    onEdit(position, {
+      id,
+      date,
+      time,
+      title,
+      type,
+      manager,
+      participants,
+      totalParticipants,
+    });
   };
 
   const handleAddTaskClick = () => {
