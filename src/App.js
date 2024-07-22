@@ -45,20 +45,15 @@ function App() {
     setShowMessages((prev) => !prev);
   };
 
-  const handleLogin = (phoneNumber) => {
+  /*  const handleLogin = (phoneNumber) => {
     setPhoneNumber(phoneNumber);
     navigate("/otp");
-  };
+  }; */
 
-  const handleOtpVerification = (otp) => {
-    if (otp === "123456") {
-      // Simulate OTP verification
-      setIsAuthenticated(true);
-      localStorage.setItem("isAuthenticated", "true");
-      navigate("/shifts");
-    } else {
-      return false;
-    }
+  const handleOtpVerification = () => {
+    setIsAuthenticated(true);
+    localStorage.setItem("isAuthenticated", "true");
+    navigate("/shifts");
   };
 
   const handleLogout = () => {
@@ -131,7 +126,7 @@ function App() {
         </>
       ) : (
         <Routes>
-          <Route path="/" element={<LoginPage onLogin={handleLogin} />} />
+          <Route path="/" element={<LoginPage />} />
           <Route
             path="/otp"
             element={<OtpPage onVerifyOtp={handleOtpVerification} />}

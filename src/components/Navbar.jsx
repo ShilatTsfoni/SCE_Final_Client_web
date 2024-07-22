@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import homePageLogo from "../assets/homePageLogo.png";
 import { ReactComponent as NotificationsIcon } from "../assets/notifications icon.svg";
 import { ReactComponent as MessagesIcon } from "../assets/Messages icon.svg";
@@ -8,6 +8,26 @@ const Navbar = ({ onNotificationsClick, onMessagesClick }) => {
   const [activeIcon, setActiveIcon] = useState(null); // State to track active icon
   const notificationIconRef = useRef(null);
   const messageIconRef = useRef(null);
+  const [organizationName, setOrganizationName] = useState("Loading...");
+
+  useEffect(() => {
+    const fetchOrganization = async () => {
+      //const orgId = "1";
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/organizations/1/"
+        );
+        const data = await response.json();
+        console.log(data);
+        setOrganizationName(data.name || "No Name Available");
+      } catch (error) {
+        console.error("Failed to fetch organization details:", error);
+        setOrganizationName("Failed to Load Name");
+      }
+    };
+
+    fetchOrganization();
+  }, []); // Empty dependency array means this effect runs only once after the first render
 
   const getGreeting = () => {
     const hours = new Date().getHours();
@@ -62,7 +82,7 @@ const Navbar = ({ onNotificationsClick, onMessagesClick }) => {
       <div className="navbar-right">
         <span className="greeting-text">
           {getGreeting()},{" "}
-          <span className="static-text">חמ"ל כיכר החטופים</span>
+          <span className="static-text">{organizationName}</span>
         </span>{" "}
         <img src={homePageLogo} alt="Logo" className="logo" />
       </div>
