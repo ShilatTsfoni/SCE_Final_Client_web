@@ -67,7 +67,11 @@ const prepareData = (
   description
 ) => {
   return {
+    organization_id: 1,
     name: shiftType,
+    description: description || null,
+    recurring: false,
+    max_volunteers: participants ? parseInt(participants) : null,
     start_date: formatDateTime(day, month, year, startHour, startMinute),
     duration: calculateDurationForDjango(
       startHour,
@@ -75,13 +79,10 @@ const prepareData = (
       endHour,
       endMinute
     ),
-    shift_manager: 2,
-    max_volunteers: participants,
-    location: location,
-    description: description,
     organization: 1,
-    recurring: false,
-    organization_id: 1,
+    shift_manager: String(manager),
+    //location: location,
+    volunteers: [],
   };
 };
 const sendDataToApi = async (json_data) => {
@@ -94,7 +95,8 @@ const sendDataToApi = async (json_data) => {
   });
 
   if (!response.ok) {
-    console.error("Failed to send data");
+    const errorData = await response.json(); // Parse the response body
+    console.error("Failed to send data", errorData);
   } else {
     console.log("Data sent successfully");
   }
@@ -185,9 +187,8 @@ const AddShift = ({ onClose }) => {
         location,
         description
       );
-      console.log(json_data);
-      let ans = sendDataToApi(json_data);
-      console.log(ans);
+      console.log("Sending data:", json_data); // Log the payload
+      sendDataToApi(json_data);
       onClose(); // Close the window if all fields are filled
     } else {
       setShowToast(true);

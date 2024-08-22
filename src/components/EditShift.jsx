@@ -49,13 +49,14 @@ const EditShift = ({
   const formattedDate = formatDate(detailText.date);
 
   const handleSaveShift = async () => {
+    console.log("Save button clicked");
     const { manager, participants, location, description } = detailText;
 
     if (manager && participants && location && description) {
       const updatedShift = {
         description: description,
         max_volunteers: parseInt(participants, 10), // Convert participants to an integer
-        shift_manager: manager,
+        shift_manager: String(manager),
         organization_id: iniitalOrganizationId,
         name: initialName,
         start_date: initialStartDate,
@@ -65,6 +66,7 @@ const EditShift = ({
       console.log("Request Payload:", updatedShift); // Log the request payload
 
       try {
+        console.log("Attempting to save shift...");
         const response = await fetch(
           `http://127.0.0.1:8000/api/shifts/${shiftId}/`,
           {
@@ -75,6 +77,7 @@ const EditShift = ({
             body: JSON.stringify(updatedShift),
           }
         );
+        console.log("All fields filled");
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -95,6 +98,7 @@ const EditShift = ({
         console.error("Error updating shift:", error);
       }
     } else {
+      console.log("Some fields are missing");
       setToastMessage("אנא מלאו את כל השדות");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);

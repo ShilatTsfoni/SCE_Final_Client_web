@@ -76,11 +76,15 @@
 }
 
 .message-user .message-avatar {
+  background-color: #1355cb;
+  color: white;
   order: 1;
   margin-left: 10px;
 }
 
 .message-reply .message-avatar {
+  background-color: #f7f7fc;
+  color: black;
   order: -1;
   margin-right: 10px;
 }
@@ -90,7 +94,8 @@
   align-items: center;
   padding: 10px;
   background-color: white;
-  flex-direction: row;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
 
 .message-input-container input {
@@ -110,9 +115,10 @@
 }
 
 .send-message-icon {
-  position: absolute;
-  margin-right: 620px;
+  margin-left: 10px;
+  margin-right: 10px;
   cursor: pointer;
   width: 24px;
   height: 24px;
+  flex-shrink: 0;
 }
