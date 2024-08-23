@@ -8,6 +8,29 @@ import { ReactComponent as DescriptionIcon } from "../assets/description icon.sv
 import { ReactComponent as ShiftsIcon } from "../assets/shifts icon.svg";
 import "./EditShift.css";
 
+const USERS_API_URL = "http://127.0.0.1:8000/api/account/users/";
+
+const fetchManagerIdByName = async (firstName, lastName) => {
+  try {
+    const response = await fetch(
+      `${USERS_API_URL}?first_name=${firstName}&last_name=${lastName}`
+    );
+    const data = await response.json();
+    if (data.count > 0) {
+      // Searching for an exact match for first name and last name
+      const matchingUser = data.results.find(
+        (user) => user.first_name === firstName && user.last_name === lastName
+      );
+      return matchingUser ? matchingUser.id : null;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Failed to fetch manager ID:", error);
+    return null;
+  }
+};
+
 const EditShift = ({
   onClose,
   shiftType,
@@ -53,10 +76,20 @@ const EditShift = ({
     const { manager, participants, location, description } = detailText;
 
     if (manager && participants && location && description) {
+      // Search for the id of the shift manager by first name and last name
+      const [firstName, lastName] = manager.split(" ");
+      const managerId = await fetchManagerIdByName(firstName, lastName);
+
+      if (!managerId) {
+        setToastMessage("לא הצלחנו למצוא את המנהל. אנא נסו שוב.");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+        return;
+      }
       const updatedShift = {
         description: description,
         max_volunteers: parseInt(participants, 10), // Convert participants to an integer
-        shift_manager: String(manager),
+        shift_manager: String(managerId),
         organization_id: iniitalOrganizationId,
         name: initialName,
         start_date: initialStartDate,
@@ -92,6 +125,7 @@ const EditShift = ({
         setShowToast(true);
         setTimeout(() => {
           setShowToast(false);
+          window.location.reload();
           onClose();
         }, 3000);
       } catch (error) {
@@ -160,7 +194,7 @@ const EditShift = ({
           <ShiftManagerIcon />
           <input
             type="text"
-            placeholder="אחראי/ת משמרת"
+            placeholder="אחראי/ת משמרת (שם מלא)"
             value={detailText.manager}
             onChange={(e) => handleChange("manager", e.target.value)}
           />

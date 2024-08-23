@@ -53,6 +53,7 @@ const ShiftsNavbar = ({ activeVolunteers, staffedShifts, onDateChange }) => {
       {addShiftOpen && (
         <div className="overlay" onClick={handleAddShiftClick} />
       )}
+      {/*
       <div className="box-percentages">
         <div className="percentages-text">
           <span className="number">{activeVolunteers}</span>
@@ -63,6 +64,7 @@ const ShiftsNavbar = ({ activeVolunteers, staffedShifts, onDateChange }) => {
           <span className="label">משמרות מאוישות</span>
         </div>
       </div>
+      */}
       <div className="main-navbar-content">
         <div className="current-date-box">
           <LeftArrowIcon className="nav-icon" onClick={handlePreviousDay} />
