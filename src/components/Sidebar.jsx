@@ -16,9 +16,9 @@ const Sidebar = () => {
       case "/shifts":
         setActive("משמרות");
         break;
-      case "/volunteers":
+      /* case "/volunteers":
         setActive("מתנדבים");
-        break;
+        break; */
       case "/messages":
         setActive("הודעות");
         break;
@@ -50,7 +50,7 @@ const Sidebar = () => {
           </div>
           <span>משמרות</span>
         </li>
-        <li
+        {/*<li
           className="sidebar-item"
           onClick={() => handleNavigation("מתנדבים", "/volunteers")}
         >
@@ -60,7 +60,7 @@ const Sidebar = () => {
             <VolunteersIcon />{" "}
           </div>
           <span>צוותים</span>
-        </li>
+        </li>*/}
         <li
           className="sidebar-item"
           onClick={() => handleNavigation("הודעות", "/messages")}

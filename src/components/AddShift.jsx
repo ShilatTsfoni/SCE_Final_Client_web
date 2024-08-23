@@ -7,7 +7,10 @@ import { ReactComponent as LocationIcon } from "../assets/location icon.svg";
 import { ReactComponent as DescriptionIcon } from "../assets/description icon.svg";
 import { ReactComponent as ArrowDownIcon } from "../assets/errow down icon.svg";
 import "./AddShift.css";
+
 const API_URL = "http://127.0.0.1:8000/api/shifts/";
+const USERS_API_URL = "http://127.0.0.1:8000/api/account/users/";
+
 const formatDateTime = (day, month, year, hour, minute) => {
   // Ensure two digits for day, month, hour, and minute
   const twoDigit = (num) => num.toString().padStart(2, "0");
@@ -52,6 +55,29 @@ const calculateDurationForDjango = (
 
   return durationString;
 };
+
+// Search shift manager id by first name and last name
+const fetchManagerIdByName = async (firstName, lastName) => {
+  try {
+    const response = await fetch(
+      `${USERS_API_URL}?first_name=${firstName}&last_name=${lastName}`
+    );
+    const data = await response.json();
+    if (data.count > 0) {
+      // An exact search will be made to verify a match for both the first name and the last name
+      const matchingUser = data.results.find(
+        (user) => user.first_name === firstName && user.last_name === lastName
+      );
+      return matchingUser ? matchingUser.id : null;
+    } else {
+      return null; // If no user with this name is found
+    }
+  } catch (error) {
+    console.error("Failed to fetch manager ID:", error);
+    return null;
+  }
+};
+
 const prepareData = (
   shiftType,
   day,
@@ -85,7 +111,8 @@ const prepareData = (
     volunteers: [],
   };
 };
-const sendDataToApi = async (json_data) => {
+
+const sendDataToApi = async (json_data, onSuccess, onError) => {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: {
@@ -97,13 +124,16 @@ const sendDataToApi = async (json_data) => {
   if (!response.ok) {
     const errorData = await response.json(); // Parse the response body
     console.error("Failed to send data", errorData);
+    onError();
   } else {
     console.log("Data sent successfully");
+    onSuccess();
   }
 };
+
 const AddShift = ({ onClose }) => {
   const [detailText, setDetailText] = useState({
-    shiftType: "בחר משמרת",
+    shiftType: "",
     day: "",
     month: "",
     year: "",
@@ -117,9 +147,10 @@ const AddShift = ({ onClose }) => {
     description: "",
   });
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  //const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const shiftTypes = ["מנהרה", "דוכן", "הסברה"];
+  const [toastMessage, setToastMessage] = useState("");
+  //const shiftTypes = ["מנהרה", "דוכן", "הסברה"];
 
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -131,20 +162,26 @@ const AddShift = ({ onClose }) => {
   const minutes = Array.from({ length: 60 }, (_, i) => i);
   const participants = Array.from({ length: 100 }, (_, i) => i + 1);
 
-  const handleDropdownToggle = () => {
+  /* const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
-  };
+  }; */
 
-  const handleSelectShiftType = (type) => {
+  /* const handleSelectShiftType = (type) => {
     setDetailText((prev) => ({ ...prev, shiftType: type }));
     setDropdownOpen(false);
-  };
+  }; */
 
   const handleChange = (field, value) => {
+    if (field === "shiftType") {
+      const wordCount = value.trim().split(/\s+/).length;
+      if (wordCount > 3) {
+        return; // Limit to 3 words
+      }
+    }
     setDetailText((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleAddShift = () => {
+  const handleAddShift = async () => {
     const {
       shiftType,
       day,
@@ -160,7 +197,7 @@ const AddShift = ({ onClose }) => {
       description,
     } = detailText;
     if (
-      shiftType !== "בחר משמרת" &&
+      shiftType /* !== "בחר משמרת" */ &&
       day &&
       month &&
       year &&
@@ -168,12 +205,23 @@ const AddShift = ({ onClose }) => {
       startMinute &&
       endHour &&
       endMinute &&
-      //manager &&
+      manager &&
       participants &&
       location &&
       description
     ) {
-      let json_data = prepareData(
+      // Splitting the first name and last name from the manager's field
+      const [firstName, lastName] = manager.split(" ");
+      const managerId = await fetchManagerIdByName(firstName, lastName);
+
+      if (!managerId) {
+        setToastMessage("לא הצלחנו למצוא את המנהל. אנא נסו שוב.");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+        return;
+      }
+
+      /* let */ const json_data = prepareData(
         shiftType,
         day,
         month,
@@ -182,24 +230,54 @@ const AddShift = ({ onClose }) => {
         startMinute,
         endHour,
         endMinute,
-        manager,
+        managerId,
         participants,
         location,
         description
       );
-      console.log("Sending data:", json_data); // Log the payload
+
+      // Log the data to see what is being sent
+      console.log(
+        "line 234: Data being sent to the server:",
+        JSON.stringify(json_data, null, 2)
+      );
+
+      // Sending data to server
+      sendDataToApi(
+        json_data,
+        () => {
+          setToastMessage("משמרת התווספה בהצלחה!");
+          setShowToast(true);
+          setTimeout(() => {
+            setShowToast(false);
+            window.location.reload(); // Refresh the page after successfully adding the shift
+            onClose();
+          }, 3000);
+        },
+        () => {
+          setToastMessage("לא הצלחנו להוסיף את המשמרת, אנא נסו שוב.");
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 3000);
+        }
+      );
+    } else {
+      setToastMessage("אנא מלאו את כל השדות.");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    }
+    /* console.log("Sending data:", json_data); // Log the payload
       sendDataToApi(json_data);
       onClose(); // Close the window if all fields are filled
     } else {
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000); // Hide the toast after 3 seconds
-    }
+    } */
   };
 
   return (
     <div className="add-shift">
       <div className={`toast ${showToast ? "show" : ""}`}>
-        אנא מלאו את כל השדות.{" "}
+        {toastMessage /* אנא מלאו את כל השדות.{" "} */}
       </div>
       <div className="add-shift-header">
         <button className="close-button" onClick={onClose}>
@@ -207,22 +285,14 @@ const AddShift = ({ onClose }) => {
         </button>
       </div>
       <div className="add-shift-content">
-        <div className="select-shift" onClick={handleDropdownToggle}>
-          <span>{detailText.shiftType}</span> <ArrowDownIcon />
+        <div className="detail-entry">
+          <input
+            type="text"
+            placeholder="סוג המשמרת"
+            value={detailText.shiftType}
+            onChange={(e) => handleChange("shiftType", e.target.value)}
+          />
         </div>
-        {dropdownOpen && (
-          <div className="dropdown">
-            {shiftTypes.map((type, index) => (
-              <div
-                key={index}
-                className="dropdown-item"
-                onClick={() => handleSelectShiftType(type)}
-              >
-                {type}
-              </div>
-            ))}
-          </div>
-        )}
         <div className="detail-entry">
           <ShiftsIcon />
           <div className="date-time-entry">
@@ -315,7 +385,7 @@ const AddShift = ({ onClose }) => {
           <ShiftManagerIcon />
           <input
             type="text"
-            placeholder="אחראי/ת משמרת"
+            placeholder="אחראי/ת משמרת (שם מלא)"
             value={detailText.manager}
             onChange={(e) => handleChange("manager", e.target.value)}
           />

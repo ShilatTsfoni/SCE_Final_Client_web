@@ -12,14 +12,29 @@ const Navbar = ({ onNotificationsClick, onMessagesClick }) => {
 
   useEffect(() => {
     const fetchOrganization = async () => {
-      //const orgId = "1";
+      const userId = localStorage.getItem("user_id");
+
+      if (!userId) {
+        setOrganizationName("User ID Not Found");
+        return;
+      }
+
       try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/api/organizations/1/"
+        // Fetch user details using the userId
+        const userResponse = await fetch(
+          `http://127.0.0.1:8000/api/account/users/${userId}/`
         );
-        const data = await response.json();
-        console.log(data);
-        setOrganizationName(data.name || "No Name Available");
+        const userData = await userResponse.json();
+
+        // Fetch organization details using the org ID from the user data
+        const orgId = userData.org;
+        localStorage.setItem("orgId", orgId);
+        const orgResponse = await fetch(
+          `http://127.0.0.1:8000/api/organizations/${orgId}/`
+        );
+        const orgData = await orgResponse.json();
+
+        setOrganizationName(orgData.name || "No Name Available");
       } catch (error) {
         console.error("Failed to fetch organization details:", error);
         setOrganizationName("Failed to Load Name");
@@ -72,12 +87,12 @@ const Navbar = ({ onNotificationsClick, onMessagesClick }) => {
           }`}
           onClick={() => handleIconClick("bell")}
         />
-        <MessagesIcon
+        {/*<MessagesIcon
           ref={messageIconRef}
           style={{ color: "#000000" }}
           className={`message-icon ${activeIcon === "message" ? "active" : ""}`}
           onClick={() => handleIconClick("message")}
-        />
+        />*/}
       </div>
       <div className="navbar-right">
         <span className="greeting-text">
