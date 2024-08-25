@@ -11,6 +11,7 @@ const ChatWindow = ({ chat }) => {
   const [userid, setUserid] = useState(localStorage.getItem("user_id"));
 
   console.log("Messages to render:", messages);
+  console.log("token:", localStorage.getItem("userToken"));
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -24,6 +25,9 @@ const ChatWindow = ({ chat }) => {
     console.log("line 22:", chat);
     console.log("chat id", chat.related_chat.id);
 
+    // Reset the messages before connecting to a new chat
+    setMessages([]);
+
     ws.current = new WebSocket(
       `ws://127.0.0.1:8000/ws/chat/chat_${chat.related_chat.id}/?token=${token}`
     );
@@ -31,19 +35,15 @@ const ChatWindow = ({ chat }) => {
 
     ws.current.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      // console.log("line 32: Received Data:", data);
 
       if (data.history) {
         setMessages(data.history);
       } else if (data.message) {
         console.log("data.message", data.message);
         setMessages((prevMessages) => {
-          // console.log("Before Update:", prevMessages);
-          // console.log("Adding message:", data.message);
           return [...prevMessages, data.message];
         });
       }
-      // console.log("line 42: After Update:", messages);
     };
 
     //---------------------------------------------------------------------------

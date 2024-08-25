@@ -52,11 +52,26 @@ const getTimeSlot = (time) => {
   return "evening";
 };
 
+// Retrieving information from the server about the user according to his id
+const fetchUserById = async (userId) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/account/users/${userId}/`
+    );
+    const user = await response.json();
+    return user;
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+    return null;
+  }
+};
+
 const Shifts = () => {
   const [, setTick] = useState(0); // State to force rerender
   const [showAddShift, setShowAddShift] = useState(false);
   const [addButtonRef, setAddButtonRef] = useState(null); // To store the ref from Navbar
   const [editShiftData, setEditShiftData] = useState(null); // To store the shift data for editing
+  const [approvalRequests, setApprovalRequests] = useState([]); // Saving the confirmation requests received from the server
   const [shifts, setShifts] = useState({});
   const editShiftRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -71,6 +86,7 @@ const Shifts = () => {
 
   useEffect(() => {
     fetchShifts(selectedDate);
+    fetchApprovalRequests();
   }, [selectedDate]);
 
   const profiles = [profile1, profile2, profile3];
@@ -94,10 +110,23 @@ const Shifts = () => {
         throw new Error("API response is not an array");
       }
 
-      const organizedData = shiftsArray.reduce((acc, shift) => {
+      // Create an array of promises to fetch user data for each shift manager
+      const managerPromises = shiftsArray.map((shift) =>
+        fetchUserById(shift.shift_manager)
+      );
+
+      // Resolve all promises to get the manager data
+      const managersData = await Promise.all(managerPromises);
+
+      const organizedData = shiftsArray.reduce((acc, shift, index) => {
         const shiftDate = new Date(shift.start_date);
         const shiftDay = shiftDate.toISOString().split("T")[0];
         if (shiftDay !== formattedDate) return acc; // Skip shifts not matching the selected date
+
+        const managerData = managersData[index];
+        const managerName = managerData
+          ? `${managerData.first_name} ${managerData.last_name}`
+          : "מנהל לא ידוע";
 
         // Calculate end time
         const [durationHours, durationMinutes, durationSeconds] = shift.duration
@@ -129,13 +158,15 @@ const Shifts = () => {
             .split("T")[1]
             .slice(0, 5)}`, // Format start and end times
           title: shift.name,
-          manager: shift.shift_manager, // Add shift manager
+          manager: managerName, // Use the full name of the manager
           participants: shift.volunteers.map((volunteer, index) => ({
             name: `Volunteer ${volunteer}`,
             photo: profiles[index % profiles.length], // Use placeholder images
           })),
           totalParticipants: shift.max_volunteers,
-          approvalRequests: [], // Add real approval requests if available
+          approvalRequests: approvalRequests.filter(
+            (request) => request.event === shift.id // filtering requests according to the ID of the shift
+          ), // Add real approval requests if available
         });
         return acc;
       }, {});
@@ -143,6 +174,19 @@ const Shifts = () => {
       setShifts(organizedData);
     } catch (error) {
       console.error("Failed to fetch shifts:", error);
+    }
+  };
+
+  const fetchApprovalRequests = async () => {
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/applications/?status=pending"
+      );
+      const data = await response.json();
+      console.log("Approval Requests:", data);
+      setApprovalRequests(data.results); // Saving the received requests
+    } catch (error) {
+      console.error("Failed to fetch approval requests:", error);
     }
   };
 
