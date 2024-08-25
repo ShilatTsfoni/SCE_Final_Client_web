@@ -4,7 +4,22 @@ import { ReactComponent as EditIcon } from "../assets/edit icon.svg";
 import { ReactComponent as ClockIcon } from "../assets/clock icon.svg";
 import { ReactComponent as MessagesIcon } from "../assets/Messages icon.svg";
 import { ReactComponent as AddTaskIcon } from "../assets/add_task icon.svg";
+import profile1 from "../assets/profile1.jpg";
 import "./ShiftCard.css";
+
+// Retrieving information from the server about the user according to his id
+const fetchUserById = async (userId) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/account/users/${userId}/`
+    );
+    const user = await response.json();
+    return user;
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+    return null;
+  }
+};
 
 const ShiftCard = ({
   id,
@@ -22,6 +37,8 @@ const ShiftCard = ({
   const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [approvalRequestsWithUserData, setApprovalRequestsWithUserData] =
+    useState([]);
 
   const getColor = (current, total) => {
     const ratio = current / total;
@@ -59,7 +76,8 @@ const ShiftCard = ({
     shiftYear === currentYear;
 
   // Determine if the shift is in the past only if it's the current day
-  const isPast = isCurrentDay && currentTime > endTime;
+  const isPast =
+    (currentTime > endTime && isCurrentDay) || currentTime > shiftDate;
 
   // Correctly handle time comparison
   //const isPast = currentTime > endTime;
@@ -69,6 +87,26 @@ const ShiftCard = ({
     console.log("End time:", endTime);
     console.log("Is past:", isPast);
   }, [currentTime, endTime, isPast]); */
+
+  useEffect(() => {
+    const fetchApprovalRequestsData = async () => {
+      const updatedRequests = await Promise.all(
+        approvalRequests.map(async (request) => {
+          const user = await fetchUserById(request.user);
+          return {
+            id: request.id,
+            name: `${user.first_name} ${user.last_name}`,
+            profilePic: profile1,
+          };
+        })
+      );
+      setApprovalRequestsWithUserData(updatedRequests);
+    };
+
+    if (showApprovalModal) {
+      fetchApprovalRequestsData();
+    }
+  }, [showApprovalModal, approvalRequests]);
 
   const handleEditClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -180,7 +218,7 @@ const ShiftCard = ({
           ></div>
           <Approval
             onClose={() => setShowApprovalModal(false)}
-            requests={approvalRequests}
+            requests={approvalRequestsWithUserData}
             onApprove={handleApprove}
             onDeny={handleDeny}
           />

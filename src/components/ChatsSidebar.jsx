@@ -5,12 +5,7 @@ import { ReactComponent as NewChatIcon } from "../assets/new chat icon.svg";
 import NewChatPopup from "./NewChatPopup";
 import profile1 from "../assets/profile1.jpg";
 
-const ChatsSidebar = ({
-  //privateChats,
-  //groupChats,
-  onSelectChat,
-  //onCreateChat,
-}) => {
+const ChatsSidebar = ({ onSelectChat }) => {
   const [currentCategory, setCurrentCategory] = useState("private");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedChatId, setSelectedChatId] = useState(null);
@@ -21,6 +16,14 @@ const ChatsSidebar = ({
   useEffect(() => {
     fetchInbox();
     fetchFriends();
+
+    // Set up polling
+    const intervalId = setInterval(() => {
+      fetchInbox(); // Fetch the inbox every 5 seconds
+    }, 5000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   const fetchInbox = async () => {
@@ -74,20 +77,51 @@ const ChatsSidebar = ({
     onSelectChat(chat);
   };
 
-  const handleCreateChat = (newChat) => {
-    const newChatObject = {
-      id: chats.length + 1,
-      type: newChat.id < 3 ? "private" : "group", // Assuming id less than 3 are volunteers and others are groups
-      name: newChat.name,
-      lastMessage: "",
-      profile: newChat.profile,
-      time: "",
-      status: "",
-      messages: [],
+  const handleCreateChat = async (newChat) => {
+    const token = localStorage.getItem("userToken");
+    const userid = localStorage.getItem("user_id");
+
+    const post_body = {
+      member_1: { id: userid },
+      member_2: { id: newChat.id },
     };
 
-    setChats((prevChats) => [...prevChats, newChatObject]);
-    handleSelectChat(newChatObject);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/chats/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(post_body),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+
+        // הוספת הצ'אט החדש לרשימת הצ'אטים
+        const newChatObject = {
+          id: data.id,
+          type: newChat.id < 3 ? "private" : "group", // מניחים ש-id פחות מ-3 הם פרטיים
+          name: newChat.name,
+          lastMessage: "",
+          profile: newChat.profile,
+          time: "",
+          status: "",
+          messages: [],
+          related_chat: data,
+        };
+
+        setChats((prevChats) => [...prevChats, newChatObject]);
+        setShowNewChatPopup(false);
+        onSelectChat(newChatObject);
+      } else {
+        console.error("Error creating new chat:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error creating new chat:", error);
+    }
   };
 
   // console.log("Current Category:", currentCategory);

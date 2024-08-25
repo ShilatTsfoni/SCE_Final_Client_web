@@ -21,8 +21,8 @@ const Approval = ({ onClose, requests, onApprove, onDeny }) => {
             />
             <div className="request-info">
               <div className="request-name">{request.name}</div>
-              <div className="request-role">{request.role}</div>
-              <div className="request-type">{request.type}</div>
+              {/* <div className="request-role">{request.role}</div>
+              <div className="request-type">{request.type}</div> */}
             </div>
             <div className="request-actions">
               <button className="approve-button" onClick={onApprove}>

@@ -166,7 +166,22 @@
 
 .add-shift .date-time-entry select {
   padding: 5px;
-  font-size: 14px;
+  font-size: 15px;
+  font-family: "Assistant";
+  font-weight: bold;
+  line-height: 24px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.add-shift .detail-entry select {
+  padding: 5px;
+  font-size: 15px;
+  font-family: "Assistant";
+  font-weight: bold;
+  line-height: 24px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
 .add-shift .detail-entry {
