@@ -41,8 +41,28 @@ const ShiftCard = ({
   const endTime = new Date(currentTime);
   endTime.setHours(endHour, endMinute, 0, 0);
 
+  // Extract the date part from the start_date
+  const shiftDate = new Date(date);
+  const shiftDay = shiftDate.getDate();
+  const shiftMonth = shiftDate.getMonth();
+  const shiftYear = shiftDate.getFullYear();
+
+  // Extract current date details
+  const currentDay = currentTime.getDate();
+  const currentMonth = currentTime.getMonth();
+  const currentYear = currentTime.getFullYear();
+
+  // Check if the shift is on the current day
+  const isCurrentDay =
+    shiftDay === currentDay &&
+    shiftMonth === currentMonth &&
+    shiftYear === currentYear;
+
+  // Determine if the shift is in the past only if it's the current day
+  const isPast = isCurrentDay && currentTime > endTime;
+
   // Correctly handle time comparison
-  const isPast = currentTime > endTime;
+  //const isPast = currentTime > endTime;
 
   /*   useEffect(() => {
     console.log("Current time:", currentTime);
