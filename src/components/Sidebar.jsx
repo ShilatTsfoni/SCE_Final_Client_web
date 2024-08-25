@@ -26,7 +26,7 @@ const Sidebar = () => {
         setActive("הגדרות");
         break;
       default:
-        setActive("");
+        setActive("משמרות");
         break;
     }
   }, [location.pathname]);
