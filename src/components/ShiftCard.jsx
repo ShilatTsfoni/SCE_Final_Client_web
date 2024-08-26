@@ -136,13 +136,19 @@ const ShiftCard = ({
     }
   };
 
-  const handleApprove = () => {
+  const handleApprove = (requestId) => {
+    setApprovalRequestsWithUserData((prevRequests) =>
+      prevRequests.filter((request) => request.id !== requestId)
+    );
     setToastMessage("הבקשה אושרה בהצלחה");
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
   };
 
-  const handleDeny = () => {
+  const handleDeny = (requestId) => {
+    setApprovalRequestsWithUserData((prevRequests) =>
+      prevRequests.filter((request) => request.id !== requestId)
+    );
     setToastMessage("הבקשה נדחתה בהצלחה");
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);

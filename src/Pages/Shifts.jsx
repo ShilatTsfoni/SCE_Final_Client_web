@@ -66,6 +66,21 @@ const fetchUserById = async (userId) => {
   }
 };
 
+const fetchApprovalRequests = async () => {
+  try {
+    const response = await fetch(
+      "http://127.0.0.1:8000/api/applications/?status=pending"
+    );
+    const data = await response.json();
+    console.log("Approval Requests:", data);
+    //setApprovalRequests(data.results); // Saving the received requests
+    return data.results; // Return the results of the approval requests
+  } catch (error) {
+    console.error("Failed to fetch approval requests:", error);
+    return [];
+  }
+};
+
 const Shifts = () => {
   const [, setTick] = useState(0); // State to force rerender
   const [showAddShift, setShowAddShift] = useState(false);
@@ -86,7 +101,7 @@ const Shifts = () => {
 
   useEffect(() => {
     fetchShifts(selectedDate);
-    fetchApprovalRequests();
+    //fetchApprovalRequests();
   }, [selectedDate]);
 
   const profiles = [profile1, profile2, profile3];
@@ -109,6 +124,10 @@ const Shifts = () => {
       if (!Array.isArray(shiftsArray)) {
         throw new Error("API response is not an array");
       }
+
+      // Fetch approval requests
+      const approvalRequests = await fetchApprovalRequests();
+      setApprovalRequests(approvalRequests);
 
       // Create an array of promises to fetch user data for each shift manager
       const managerPromises = shiftsArray.map((shift) =>
@@ -177,21 +196,9 @@ const Shifts = () => {
     }
   };
 
-  const fetchApprovalRequests = async () => {
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/applications/?status=pending"
-      );
-      const data = await response.json();
-      console.log("Approval Requests:", data);
-      setApprovalRequests(data.results); // Saving the received requests
-    } catch (error) {
-      console.error("Failed to fetch approval requests:", error);
-    }
-  };
-
   const handleDateChange = (date) => {
-    fetchShifts(date);
+    setSelectedDate(date);
+    //fetchShifts(date);
   };
 
   const shiftNames = Object.keys(shifts); // Dynamic determination of shift types
